@@ -20,13 +20,15 @@ public class SDodgeMessage implements IMessage {
 	private boolean messageValid;
 
 	private String dir;
+	private int cooldown;
 	
 	public SDodgeMessage() {
 		this.messageValid = false;
 	}
 
-	public SDodgeMessage(String dir) {
+	public SDodgeMessage(String dir, int cooldown) {
 		this.dir = dir;
+		this.cooldown = cooldown;
 		this.messageValid = true;
 	}
 
@@ -35,6 +37,7 @@ public class SDodgeMessage implements IMessage {
 
 		try {
 			this.dir = ByteBufUtils.readUTF8String(buf);
+			this.cooldown = buf.readInt();
 		} catch (IndexOutOfBoundsException ioe) {
 			ElenaiDodge.LOG.error("Error occured whilst networking!", ioe);
 			return;
@@ -48,6 +51,7 @@ public class SDodgeMessage implements IMessage {
 			return;
 		}
 		ByteBufUtils.writeUTF8String(buf, dir);
+		buf.writeInt(cooldown);
 	}
 
 	public static class Handler implements IMessageHandler<SDodgeMessage, IMessage> {
@@ -65,7 +69,7 @@ public class SDodgeMessage implements IMessage {
 		void processMessage(SDodgeMessage message, MessageContext ctx) {;
 			EntityPlayerMP player = ctx.getServerHandler().player;
 
-			DodgeEvent.ServerDodgeEvent event = new ServerDodgeEvent(Direction.valueOf(message.dir), Utils.calculateForce(player), player);
+			DodgeEvent.ServerDodgeEvent event = new ServerDodgeEvent(Direction.valueOf(message.dir), Utils.calculateForce(player), player, message.cooldown);
 			if(!MinecraftForge.EVENT_BUS.post(event)) {
 				Utils.handleDodge(Direction.valueOf(message.dir), event, player);
 			}

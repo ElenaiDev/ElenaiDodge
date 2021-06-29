@@ -18,9 +18,8 @@ public class CUpdateConfigMessage implements IMessage {
 	 * A Message to transfer server side values from the Config.
 	 */
 
-	private int regenRate, dodges, absorption;
+	private int regenRate;
 	private String weights;
-	private boolean half, tanEnabled;
 
 	private boolean messageValid;
 
@@ -28,13 +27,9 @@ public class CUpdateConfigMessage implements IMessage {
 		this.messageValid = false;
 	}
 
-	public CUpdateConfigMessage(int regenRate, int dodges, String weights, boolean half, int absorption, boolean tanEnabled) {
+	public CUpdateConfigMessage(int regenRate, String weights) {
 		this.regenRate = regenRate;
-		this.dodges = dodges;
 		this.weights = weights;
-		this.half = half;
-		this.absorption = absorption;
-		this.tanEnabled = tanEnabled;
 
 
 		this.messageValid = true;
@@ -44,11 +39,7 @@ public class CUpdateConfigMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		try {
 			this.regenRate = buf.readInt();
-			this.dodges = buf.readInt();
 			this.weights = ByteBufUtils.readUTF8String(buf);
-			this.half = buf.readBoolean();
-			this.absorption = buf.readInt();
-			this.tanEnabled = buf.readBoolean();
 
 
 		} catch (IndexOutOfBoundsException ioe) {
@@ -64,11 +55,7 @@ public class CUpdateConfigMessage implements IMessage {
 			return;
 		}
 		buf.writeInt(regenRate);
-		buf.writeInt(dodges);
 		ByteBufUtils.writeUTF8String(buf, weights);
-		buf.writeBoolean(half);
-		buf.writeInt(absorption);
-		buf.writeBoolean(tanEnabled);
 
 	}
 
@@ -87,13 +74,7 @@ public class CUpdateConfigMessage implements IMessage {
 		void processMessage(CUpdateConfigMessage message, MessageContext ctx) {
 			ClientStorage.regenSpeed = message.regenRate;
 
-			if (message.dodges != 9999) {
-				ClientStorage.dodges = message.dodges;
-				ClientStorage.absorption = message.absorption;
-			}
 			ClientStorage.weightValues = message.weights;
-			ClientStorage.halfFeathers = message.half;
-			ClientStorage.tanEnabled = message.tanEnabled;
 			
 			// Forces Armor Refresh
 			ArmorTickEventListener.previousArmor.clear();

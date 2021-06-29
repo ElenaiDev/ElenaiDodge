@@ -1,5 +1,7 @@
 package com.elenai.elenaidodge.api;
 
+import com.elenai.elenaidodge.util.ClientStorage;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
@@ -15,6 +17,7 @@ public class DodgeEvent extends Event {
 	protected Direction direction;
 	protected final EntityPlayer player;
 	protected double force;
+	protected int cooldown;
 
 	/**
 	 * Do not use this by itself. Please use RequestDodgeEvent for the Client, and
@@ -29,11 +32,12 @@ public class DodgeEvent extends Event {
 	 * @param player
 	 * @author Elenai
 	 */
-	public DodgeEvent(Side side, Direction direction, double force, EntityPlayer player) {
+	public DodgeEvent(Side side, Direction direction, double force, EntityPlayer player, int cooldown) {
 		this.side = side;
 		this.direction = direction;
 		this.force = force;
 		this.player = player;
+		this.cooldown = cooldown;
 	}
 
 	/**
@@ -44,7 +48,7 @@ public class DodgeEvent extends Event {
 	 */
 	public static class RequestDodgeEvent extends DodgeEvent {
 		public RequestDodgeEvent(Direction direction) {
-			super(Side.SERVER, direction, 0.0, Minecraft.getMinecraft().player);
+			super(Side.SERVER, direction, 0.0, Minecraft.getMinecraft().player, ClientStorage.cooldown);
 		}
 	}
 
@@ -56,8 +60,8 @@ public class DodgeEvent extends Event {
 	 */
 	@Cancelable
 	public static class ServerDodgeEvent extends DodgeEvent {
-		public ServerDodgeEvent(Direction direction, double force, EntityPlayer player) {
-			super(Side.CLIENT, direction, force, player);
+		public ServerDodgeEvent(Direction direction, double force, EntityPlayer player, int cooldown) {
+			super(Side.CLIENT, direction, force, player, cooldown);
 		}
 		
 		/**
@@ -80,6 +84,15 @@ public class DodgeEvent extends Event {
 		 */
 		public EntityPlayer getPlayer() {
 			return player;
+		}
+		
+		public int getCooldown() {
+			return cooldown;
+		}
+
+
+		public void setCooldown(int cooldown) {
+			this.cooldown = cooldown;
 		}
 	}
 

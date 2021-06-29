@@ -4,10 +4,6 @@ import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.api.DodgeEvent;
 import com.elenai.elenaidodge.api.DodgeEvent.Direction;
-import com.elenai.elenaidodge.capability.absorption.AbsorptionProvider;
-import com.elenai.elenaidodge.capability.absorption.IAbsorption;
-import com.elenai.elenaidodge.capability.dodges.DodgesProvider;
-import com.elenai.elenaidodge.capability.dodges.IDodges;
 import com.elenai.elenaidodge.effects.ServerDodgeEffects;
 import com.elenai.elenaidodge.network.PacketHandler;
 import com.elenai.elenaidodge.network.message.CDodgeEffectsMessage;
@@ -15,7 +11,6 @@ import com.elenai.elenaidodge.network.message.CInitPlayerMessage;
 import com.elenai.elenaidodge.network.message.CUpdateConfigMessage;
 import com.elenai.elenaidodge.network.message.CVelocityMessage;
 
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -86,9 +81,7 @@ public class Utils {
 		}
 		setPlayerVelocity(motionX, ModConfig.common.balance.verticality, motionZ, player);
 		ServerDodgeEffects.run(player);
-		IDodges d = player.getCapability(DodgesProvider.DODGES_CAP, null);
-		IAbsorption a = player.getCapability(AbsorptionProvider.ABSORPTION_CAP, null);
-		PacketHandler.instance.sendTo(new CDodgeEffectsMessage(d.getDodges(), a.getAbsorption()), (EntityPlayerMP) player);
+		PacketHandler.instance.sendTo(new CDodgeEffectsMessage(), (EntityPlayerMP) player);
 	}
 	
 	/**
@@ -110,8 +103,6 @@ public class Utils {
 	 */
 	public static void initPlayer(EntityPlayer player) {
 		PacketHandler.instance.sendTo(new CInitPlayerMessage(20), (EntityPlayerMP) player);
-		IDodges d = player.getCapability(DodgesProvider.DODGES_CAP, null);
-		d.set(20);
 	}
 	
 	/**
@@ -120,10 +111,8 @@ public class Utils {
 	 * @param player
 	 */
 	public static void updateClientConfig(EntityPlayerMP player) {
-		IDodges d = player.getCapability(DodgesProvider.DODGES_CAP, null);
-		IAbsorption a = player.getCapability(AbsorptionProvider.ABSORPTION_CAP, null);
-		PacketHandler.instance.sendTo(new CUpdateConfigMessage(ModConfig.common.feathers.rate, d.getDodges(), arrayToString(ModConfig.common.weights.weights),
-				ModConfig.common.feathers.half, a.getAbsorption(), ModConfig.common.integration.toughAsNails.enabled), player);
+		PacketHandler.instance.sendTo(new CUpdateConfigMessage(ModConfig.common.balance.regenSpeed, arrayToString(ModConfig.common.weights.weights)
+				), player);
 	}
 	
 	/**
@@ -131,8 +120,8 @@ public class Utils {
 	 * @author Elenai
 	 */
 	public static void updateClientConfig() {
-		PacketHandler.instance.sendToAll(new CUpdateConfigMessage(ModConfig.common.feathers.rate, 9999, arrayToString(ModConfig.common.weights.weights),
-				ModConfig.common.feathers.half, 9999, ModConfig.common.integration.toughAsNails.enabled));
+		PacketHandler.instance.sendToAll(new CUpdateConfigMessage(ModConfig.common.balance.regenSpeed, arrayToString(ModConfig.common.weights.weights)
+				));
 	}
 	
 	/**
@@ -202,20 +191,6 @@ public class Utils {
 							.getValue(new ResourceLocation(ElenaiDodge.MODID, "dodge"))));
 		}
 		return true;
-	}
-	
-	/**
-	 * Checks if the player has the TAN implementation enabled and the mod is present on the Client.
-	 * If Reskillable is not installed, this will simply return true.
-	 * 
-	 * @return Dodge Trait Unlocked
-	 * @author Elenai
-	 */
-	public static boolean tanEnabled(EntityPlayerSP player) {
-		if (Loader.isModLoaded("toughasnails") && ClientStorage.tanEnabled) {
-			return true;
-		}
-		return false;
 	}
 	
 }

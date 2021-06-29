@@ -23,6 +23,7 @@ public class TickEventListener {
 			if (i.getInvincibility() > 0) {
 				i.set(i.getInvincibility() - 1);
 			}
+			
 			IParticles p = event.player.getCapability(ParticlesProvider.PARTICLES_CAP, null);
 			if (p.getParticles() > 0) {
 				p.set(p.getParticles() - 1);

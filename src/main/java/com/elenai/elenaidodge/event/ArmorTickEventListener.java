@@ -106,10 +106,7 @@ public class ArmorTickEventListener {
 					head = false; chest = false; legs = false; feet = false;
 					intWeight = (int) Math.floor(Double.valueOf(weight));
 					intWeight -= Utils.getTotalEnchantmentLevel(EnchantmentInit.LIGHTWEIGHT, player);
-					if (!ClientStorage.halfFeathers) {
-						ClientStorage.weight = (int) (Math.floor(intWeight / 2) * 2);
-						PacketHandler.instance.sendToServer(new SWeightMessage((int) (Math.floor(intWeight / 2) * 2)));
-					} else {
+					{
 						ClientStorage.weight = intWeight;
 						PacketHandler.instance.sendToServer(new SWeightMessage(intWeight));
 					}

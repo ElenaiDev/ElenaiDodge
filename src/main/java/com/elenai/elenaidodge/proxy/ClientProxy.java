@@ -6,6 +6,7 @@ import com.elenai.elenaidodge.event.ClientTickEventListener;
 import com.elenai.elenaidodge.event.CoreDodgeEventListener;
 import com.elenai.elenaidodge.event.InputEventListener;
 import com.elenai.elenaidodge.event.TooltipEventListener;
+import com.elenai.elenaidodge.gui.DodgeGui;
 import com.elenai.elenaidodge.util.Keybinds;
 import com.elenai.elenaidodge.util.PatronRewardHandler;
 
@@ -23,6 +24,8 @@ public class ClientProxy extends CommonProxy {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+		MinecraftForge.EVENT_BUS.register(new DodgeGui());
+
 	}
 
 	@EventHandler

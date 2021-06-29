@@ -4,14 +4,12 @@ import com.elenai.elenaidodge.network.message.CDodgeEffectsMessage;
 import com.elenai.elenaidodge.network.message.CInitPlayerMessage;
 import com.elenai.elenaidodge.network.message.CParticleMessage;
 import com.elenai.elenaidodge.network.message.CPatronMessage;
-import com.elenai.elenaidodge.network.message.CUpdateAbsorptionMessage;
 import com.elenai.elenaidodge.network.message.CUpdateConfigMessage;
 import com.elenai.elenaidodge.network.message.CUpdateDodgeMessage;
 import com.elenai.elenaidodge.network.message.CUpdateRegenMessage;
 import com.elenai.elenaidodge.network.message.CUpdateWeightMessage;
 import com.elenai.elenaidodge.network.message.CVelocityMessage;
 import com.elenai.elenaidodge.network.message.SDodgeMessage;
-import com.elenai.elenaidodge.network.message.SDodgeRegenMessage;
 import com.elenai.elenaidodge.network.message.SWeightMessage;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -28,7 +26,6 @@ public class PacketHandler {
 		
 		// Server Side Logic
 		instance.registerMessage(SDodgeMessage.Handler.class, SDodgeMessage.class, nextId++, Side.SERVER);
-		instance.registerMessage(SDodgeRegenMessage.Handler.class, SDodgeRegenMessage.class, nextId++, Side.SERVER);
 		instance.registerMessage(SWeightMessage.Handler.class, SWeightMessage.class, nextId++, Side.SERVER);
 
 		
@@ -37,7 +34,6 @@ public class PacketHandler {
 		instance.registerMessage(CDodgeEffectsMessage.Handler.class, CDodgeEffectsMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CUpdateConfigMessage.Handler.class, CUpdateConfigMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CInitPlayerMessage.Handler.class, CInitPlayerMessage.class, nextId++, Side.CLIENT);
-		instance.registerMessage(CUpdateAbsorptionMessage.Handler.class, CUpdateAbsorptionMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CUpdateWeightMessage.Handler.class, CUpdateWeightMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CUpdateDodgeMessage.Handler.class, CUpdateDodgeMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CParticleMessage.Handler.class, CParticleMessage.class, nextId++, Side.CLIENT);

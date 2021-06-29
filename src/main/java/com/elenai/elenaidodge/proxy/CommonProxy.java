@@ -2,15 +2,6 @@ package com.elenai.elenaidodge.proxy;
 
 import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.capability.CapabilityHandler;
-import com.elenai.elenaidodge.capability.absorption.Absorption;
-import com.elenai.elenaidodge.capability.absorption.AbsorptionStorage;
-import com.elenai.elenaidodge.capability.absorption.IAbsorption;
-import com.elenai.elenaidodge.capability.absorptionbool.AbsorptionBool;
-import com.elenai.elenaidodge.capability.absorptionbool.AbsorptionBoolStorage;
-import com.elenai.elenaidodge.capability.absorptionbool.IAbsorptionBool;
-import com.elenai.elenaidodge.capability.dodges.Dodges;
-import com.elenai.elenaidodge.capability.dodges.DodgesStorage;
-import com.elenai.elenaidodge.capability.dodges.IDodges;
 import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
 import com.elenai.elenaidodge.capability.invincibility.Invincibility;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityStorage;
@@ -28,7 +19,6 @@ import com.elenai.elenaidodge.capability.weight.Weight;
 import com.elenai.elenaidodge.capability.weight.WeightStorage;
 import com.elenai.elenaidodge.event.ConfigEventListener;
 import com.elenai.elenaidodge.event.InvincibilityEventListener;
-import com.elenai.elenaidodge.event.PlayerSleepEventListener;
 import com.elenai.elenaidodge.event.PotionTickEventListener;
 import com.elenai.elenaidodge.event.RenderEventListener;
 import com.elenai.elenaidodge.event.ServerDodgeEventListener;
@@ -54,11 +44,8 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		PacketHandler.registerMessages(ElenaiDodge.MODID);
 		PatronRewardHandler.init();
-		CapabilityManager.INSTANCE.register(IDodges.class, new DodgesStorage(), Dodges::new);
 		CapabilityManager.INSTANCE.register(IJoined.class, new JoinedStorage(), Joined::new);
 		CapabilityManager.INSTANCE.register(IWeight.class, new WeightStorage(), Weight::new);
-		CapabilityManager.INSTANCE.register(IAbsorption.class, new AbsorptionStorage(), Absorption::new);
-		CapabilityManager.INSTANCE.register(IAbsorptionBool.class, new AbsorptionBoolStorage(), AbsorptionBool::new);
 		CapabilityManager.INSTANCE.register(IInvincibility.class, new InvincibilityStorage(), Invincibility::new);
 		CapabilityManager.INSTANCE.register(IParticles.class, new ParticlesStorage(), Particles::new);
 		CapabilityManager.INSTANCE.register(IRegen.class, new RegenStorage(), Regen::new);
@@ -79,7 +66,6 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
 		MinecraftForge.EVENT_BUS.register(new PotionTickEventListener());
 		MinecraftForge.EVENT_BUS.register(new ItemInit());
-		MinecraftForge.EVENT_BUS.register(new PlayerSleepEventListener());
 		MinecraftForge.EVENT_BUS.register(new InvincibilityEventListener());
 	}
 	

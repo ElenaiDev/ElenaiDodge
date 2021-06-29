@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Config.RangeDouble;
 import net.minecraftforge.common.config.Config.RangeInt;
 import net.minecraftforge.common.config.Config.Type;
 
-@Config(modid = ElenaiDodge.MODID, name = "Elenai Dodge 2", type = Type.INSTANCE)
+@Config(modid = ElenaiDodge.MODID, name = "Elenai Dodge", type = Type.INSTANCE)
 public class ModConfig {
 
 	public static Client client = new Client();
@@ -39,18 +39,6 @@ public class ModConfig {
 			@Name("Show HUD")
 			@Comment("Whether to show the feathers in the UI.")
 			public boolean hud = true;
-			
-			@Name("Compatibility HUD")
-			@Comment("Whether to enable compatibility mode for the HUD. If it isn't working as expected, try this.")
-			public boolean compatHud = false;
-			
-			@Name("Fadeout Inactive HUD")
-			@Comment("Whether the GUI fades out when it is inactive.")
-			public boolean fadeout = false;
-			
-			@Name("Visual Dodge Failure")
-			@Comment("Whether the feather bar will flash when the player attempts to dodge without the required feathers or too high a weight.")
-			public boolean flash = false;
 
 			@Name("Show Tutorial")
 			@Comment("Whether to show the tutorial on joining a new world.")
@@ -69,6 +57,11 @@ public class ModConfig {
 		public Balance balance = new Balance();
 
 		public class Balance {
+			
+			@Name("Cooldown Speed")
+			@Comment("The amount of ticks required for the Dodge cooldown to fully decrease.")
+			@RangeInt(min = 0, max = Integer.MAX_VALUE)
+			public int regenSpeed = 20;
 
 			@Name("Force")
 			@Comment("The force of the player's dodge before any multipliers have been applied. This value is very sensitive.")
@@ -112,36 +105,12 @@ public class ModConfig {
 			public String[] potions = {};
 		}
 
-		public Feathers feathers = new Feathers();
-
-		public class Feathers {
-
-			@Name("Cost")
-			@Comment("How many half feathers dodging requires.")
-			@RangeInt(min = 0, max = 20)
-			public int cost = 2;
-			
-			@Name("Airborne Cost")
-			@Comment("How many half feathers dodging midair requires. [Dodge Whilst Airborne must be Enabled]")
-			@RangeInt(min = 0, max = 20)
-			public int airborneCost = 4;
-
-			@Name("Regeneration Rate")
-			@Comment("The amount of ticks required to regenerate half a feather.")
-			@RangeInt(min = 1, max = Integer.MAX_VALUE)
-			public int rate = 80;
-
-			@Name("Half Feathers")
-			@Comment("Whether to enable 'Half Feathers'. Instead of weight values rounding down, they will instead show as a half feather. These can be used if the 'Cost' value is set to an odd number.")
-			public boolean half = false;
-		}
-
 		public Weights weights = new Weights();
 
 		public class Weights {
 
 			@Name("Weights Override")
-			@Comment("The weight of each item of Armor. This overrides the default generated values. Each 'Steel Feather' is equivalent to a weight of 2. Insert values as such: modid:itemname=value. Any item with a weight over 24 will not show its weight as a tooltip. Idea Credit: SandwichHorror")
+			@Comment("The weight of each item of Armor. This overrides the default generated values. Insert values as such: modid:itemname=value. Idea Credit: SandwichHorror")
 			public String[] weights = { "minecraft:leather_boots=1", "minecraft:leather_leggings=2",
 					"minecraft:leather_chestplate=3", "minecraft:leather_helmet=1", "minecraft:iron_boots=2",
 					"minecraft:iron_leggings=3", "minecraft:iron_chestplate=5", "minecraft:iron_helmet=3",
@@ -274,9 +243,6 @@ public class ModConfig {
 		public Misc misc = new Misc();
 
 		public class Misc {
-			@Name("Overwhelmed Message")
-			@Comment("Whether the Player is notified when the Endurance Effect is overpowered by the Heavy Effect.")
-			public boolean message = true;
 
 			@Name("Nether Dodge")
 			@Comment("Whether the Player dodges further in the Nether.")
@@ -290,24 +256,6 @@ public class ModConfig {
 			@Comment("Whether the Player's dodge creates a puff of smoke.")
 			public boolean particles = true;
 		}
-		
-		public Integration integration = new Integration();
-
-		public class Integration {
-			public ToughAsNails toughAsNails = new ToughAsNails();
-
-			public class ToughAsNails {
-			@Name("Exhaustion")
-			@Comment("How much exhaustion (thirstiness) is added when the player regenerates a dodge feather.")
-			@RangeDouble(min = 0.0, max = 40.0)
-			public double exhaustion = 6;
-			
-			@Name("Enabled")
-			@Comment("Whether to enable Tough as Nails support")
-			public boolean enabled = true;
-			}
-		}
-
 	}
 
 }

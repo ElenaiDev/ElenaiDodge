@@ -19,7 +19,7 @@ public class CoreDodgeEventListener {
 
 	@SubscribeEvent
 	public void onClientDodge(RequestDodgeEvent event) {
-		PacketHandler.instance.sendToServer(new SDodgeMessage(event.getDirection().toString()));
+		PacketHandler.instance.sendToServer(new SDodgeMessage(event.getDirection().toString(), ClientStorage.dodges));
 		ClientStorage.cooldown = 8;
 	}
 }

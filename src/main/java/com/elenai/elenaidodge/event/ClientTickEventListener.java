@@ -2,8 +2,6 @@ package com.elenai.elenaidodge.event;
 
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.gui.DodgeStep;
-import com.elenai.elenaidodge.network.PacketHandler;
-import com.elenai.elenaidodge.network.message.SDodgeRegenMessage;
 import com.elenai.elenaidodge.util.ClientStorage;
 
 import net.minecraft.client.Minecraft;
@@ -93,22 +91,9 @@ public class ClientTickEventListener {
 					ClientStorage.failed = false;
 				}
 
-				// REGENERATION LOGIC
-				if (ClientStorage.dodges < 20) {
-
-					if (regen > 0) {
-						regen--;
-					} else if (regen <= 0) {
-
-						ClientStorage.dodges++;
-						PacketHandler.instance.sendToServer(new SDodgeRegenMessage(ClientStorage.dodges));
-						flashes = 0;
-						if (ClientStorage.regenSpeed + ClientStorage.regenModifier > 0) {
-							regen = ClientStorage.regenSpeed + ClientStorage.regenModifier;
-						} else {
-							regen = 1;
-						}
-					}
+				if (ClientStorage.dodgesDouble > 0) {
+					ClientStorage.dodgesDouble -= (27.0 / ClientStorage.regenSpeed);
+					ClientStorage.dodges = (int) Math.ceil(ClientStorage.dodgesDouble);
 				}
 			}
 		}

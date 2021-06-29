@@ -43,6 +43,10 @@ public class ServerDodgeEventListener {
 			event.setCanceled(true);
 		}
 
+		if (!player.isCreative() && !player.isSpectator() && event.getCooldown() > 0) {
+			event.setCanceled(true);
+		}
+		
 		for (String i : ModConfig.common.balance.potions) {
 			player.getActivePotionEffects().forEach(p -> {
 				if (p.getPotion().getRegistryName().equals(new ResourceLocation(i))) {
