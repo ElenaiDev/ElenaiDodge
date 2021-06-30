@@ -238,6 +238,14 @@ public class ModConfig {
 					"nyx:meteor_boots=3", "nyx:meteor_pants=4", "nyx:meteor_chest=6", "nyx:meteor_helm=3",
 					"ceramics:clay_boots=1", "ceramics:clay_leggings=2", "ceramics:clay_chestplate=3",
 					"ceramics:clay_helmet=1", "dungeontactics:bounce_boots=2" };
+			
+			@Name("Weight Tiers")
+			@Comment("The Cooldown Speed and Dodge Force given to the player depending on their weight. Each tier is determined by a minimum weight to enter it. Always start this at 0.0 and add each tier in increasing weight order. To make a player 'Overencumbered' simply set a tiers cooldown AND force to 0. Insert values as such: minimumweight:cooldown|force. Idea Credit: SandwichHorror")
+			public String[] tiers = { "0.0:20|1.0", "5.0:35|0.8", "10.0:50|0.75", "15.0:65|0.6", "20.0:0|0" };
+			
+			@Name("Enable Weights")
+			@Comment("Enables the Weight System")
+			public boolean enable = true;
 		}
 
 		public Misc misc = new Misc();

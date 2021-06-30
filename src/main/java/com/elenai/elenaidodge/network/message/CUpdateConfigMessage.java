@@ -20,6 +20,7 @@ public class CUpdateConfigMessage implements IMessage {
 
 	private int regenRate;
 	private String weights;
+	private boolean weightsEnabled;
 
 	private boolean messageValid;
 
@@ -27,10 +28,10 @@ public class CUpdateConfigMessage implements IMessage {
 		this.messageValid = false;
 	}
 
-	public CUpdateConfigMessage(int regenRate, String weights) {
+	public CUpdateConfigMessage(int regenRate, String weights, boolean weightsEnabled) {
 		this.regenRate = regenRate;
 		this.weights = weights;
-
+this.weightsEnabled = weightsEnabled;
 
 		this.messageValid = true;
 	}
@@ -40,6 +41,7 @@ public class CUpdateConfigMessage implements IMessage {
 		try {
 			this.regenRate = buf.readInt();
 			this.weights = ByteBufUtils.readUTF8String(buf);
+			this.weightsEnabled = buf.readBoolean();
 
 
 		} catch (IndexOutOfBoundsException ioe) {
@@ -56,7 +58,7 @@ public class CUpdateConfigMessage implements IMessage {
 		}
 		buf.writeInt(regenRate);
 		ByteBufUtils.writeUTF8String(buf, weights);
-
+		buf.writeBoolean(weightsEnabled);
 	}
 
 	public static class Handler implements IMessageHandler<CUpdateConfigMessage, IMessage> {
@@ -73,7 +75,7 @@ public class CUpdateConfigMessage implements IMessage {
 
 		void processMessage(CUpdateConfigMessage message, MessageContext ctx) {
 			ClientStorage.regenSpeed = message.regenRate;
-
+			ClientStorage.weightsEnabled = message.weightsEnabled;
 			ClientStorage.weightValues = message.weights;
 			
 			// Forces Armor Refresh

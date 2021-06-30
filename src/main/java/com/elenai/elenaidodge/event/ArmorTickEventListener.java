@@ -104,11 +104,10 @@ public class ArmorTickEventListener {
 							if(!feet) {weight += ConstructsArmory.getWeight(player, EntityEquipmentSlot.FEET);}
 						}
 					head = false; chest = false; legs = false; feet = false;
-					intWeight = (int) Math.floor(Double.valueOf(weight));
-					intWeight -= Utils.getTotalEnchantmentLevel(EnchantmentInit.LIGHTWEIGHT, player);
+					weight -= Utils.getTotalEnchantmentLevel(EnchantmentInit.LIGHTWEIGHT, player);
 					{
-						ClientStorage.weight = intWeight;
-						PacketHandler.instance.sendToServer(new SWeightMessage(intWeight));
+						ClientStorage.weight = weight;
+						PacketHandler.instance.sendToServer(new SWeightMessage(weight));
 					}
 
 					previousArmor.clear();

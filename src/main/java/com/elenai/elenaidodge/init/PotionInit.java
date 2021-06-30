@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class PotionInit {
 	public static final Potion FORCEFUL_EFFECT = new BasePotion("forceful", false, 5534118, 2, 0);
 	public static final Potion FEEBLE_EFFECT = new BasePotion("feeble", true, 10693147, 1, 1);
-	
 
 	public static final PotionType FORCEFUL = new PotionType("forceful", new PotionEffect[] {new PotionEffect(FORCEFUL_EFFECT, 3600)}).setRegistryName("forceful");
 	public static final PotionType LONG_FORCEFUL = new PotionType("forceful", new PotionEffect[] {new PotionEffect(FORCEFUL_EFFECT, 9600)}).setRegistryName("long_forceful");
@@ -22,7 +21,6 @@ public class PotionInit {
 	public static final PotionType FEEBLE = new PotionType("feeble", new PotionEffect[] {new PotionEffect(FEEBLE_EFFECT, 3600)}).setRegistryName("feeble");
 	public static final PotionType LONG_FEEBLE = new PotionType("feeble", new PotionEffect[] {new PotionEffect(FEEBLE_EFFECT, 9600)}).setRegistryName("long_feeble");
 	public static final PotionType STRONG_FEEBLE = new PotionType("feeble", new PotionEffect[] {new PotionEffect(FEEBLE_EFFECT, 1800, 1)}).setRegistryName("strong_feeble");
-	
 	
 	public static void registerPotions() {
 		registerPotion(FORCEFUL, LONG_FORCEFUL, STRONG_FORCEFUL, FORCEFUL_EFFECT);
@@ -38,11 +36,11 @@ public class PotionInit {
 		ForgeRegistries.POTION_TYPES.register(strongPotion);
 	}
 	
-	private static void registerPotion(PotionType defaultPotion, PotionType longPotion, Potion effect) {
-		ForgeRegistries.POTIONS.register(effect);
-		ForgeRegistries.POTION_TYPES.register(defaultPotion);
-		ForgeRegistries.POTION_TYPES.register(longPotion);
-	}
+//	private static void registerPotion(PotionType defaultPotion, PotionType longPotion, Potion effect) {
+//		ForgeRegistries.POTIONS.register(effect);
+//		ForgeRegistries.POTION_TYPES.register(defaultPotion);
+//		ForgeRegistries.POTION_TYPES.register(longPotion);
+//	}
 	
 	private static void registerPotionMixes() {
 		

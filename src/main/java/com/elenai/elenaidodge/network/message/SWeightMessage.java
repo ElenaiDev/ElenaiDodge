@@ -15,13 +15,13 @@ import net.minecraftforge.fml.relauncher.Side;
 public class SWeightMessage implements IMessage {
 	private boolean messageValid;
 
-	private int weight;
+	private double weight;
 	
 	public SWeightMessage() {
 		this.messageValid = false;
 	}
 
-	public SWeightMessage(int weight) {
+	public SWeightMessage(double weight) {
 		this.weight = weight;
 		this.messageValid = true;
 	}
@@ -30,7 +30,7 @@ public class SWeightMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 
 		try {
-			this.weight = buf.readInt();
+			this.weight = buf.readDouble();
 		} catch (IndexOutOfBoundsException ioe) {
 			ElenaiDodge.LOG.error("Error occured whilst networking!", ioe);
 			return;
@@ -43,7 +43,7 @@ public class SWeightMessage implements IMessage {
 		if (!this.messageValid) {
 			return;
 		}
-		buf.writeInt(weight);
+		buf.writeDouble(weight);
 	}
 
 	public static class Handler implements IMessageHandler<SWeightMessage, IMessage> {

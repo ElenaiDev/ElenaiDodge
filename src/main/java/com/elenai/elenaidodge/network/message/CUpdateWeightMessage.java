@@ -17,7 +17,7 @@ public class CUpdateWeightMessage implements IMessage {
 	 * A Message to transfer server side values when the player dodges
 	 */
 
-	private int weight;
+	private double weight;
 
 	private boolean messageValid;
 
@@ -25,7 +25,7 @@ public class CUpdateWeightMessage implements IMessage {
 		this.messageValid = false;
 	}
 
-	public CUpdateWeightMessage(int weight) {
+	public CUpdateWeightMessage(double weight) {
 		this.weight = weight;
 
 		this.messageValid = true;
@@ -48,7 +48,7 @@ public class CUpdateWeightMessage implements IMessage {
 		if (!this.messageValid) {
 			return;
 		}
-		buf.writeInt(weight);
+		buf.writeDouble(weight);
 
 	}
 

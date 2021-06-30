@@ -15,7 +15,8 @@ public class ClientStorage {
 	public static String weightValues;
 	public static int dodges;
 	public static double dodgesDouble;
-	public static int weight = 0;
+	public static double weight = 0;
 	public static int regenSpeed;
+	public static boolean weightsEnabled;
 
 }

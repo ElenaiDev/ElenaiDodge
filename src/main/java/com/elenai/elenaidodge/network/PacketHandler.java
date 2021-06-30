@@ -5,6 +5,7 @@ import com.elenai.elenaidodge.network.message.CInitPlayerMessage;
 import com.elenai.elenaidodge.network.message.CParticleMessage;
 import com.elenai.elenaidodge.network.message.CPatronMessage;
 import com.elenai.elenaidodge.network.message.CUpdateConfigMessage;
+import com.elenai.elenaidodge.network.message.CUpdateCooldownMessage;
 import com.elenai.elenaidodge.network.message.CUpdateDodgeMessage;
 import com.elenai.elenaidodge.network.message.CUpdateRegenMessage;
 import com.elenai.elenaidodge.network.message.CUpdateWeightMessage;
@@ -39,6 +40,7 @@ public class PacketHandler {
 		instance.registerMessage(CParticleMessage.Handler.class, CParticleMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CPatronMessage.Handler.class, CPatronMessage.class, nextId++, Side.CLIENT);
 		instance.registerMessage(CUpdateRegenMessage.Handler.class, CUpdateRegenMessage.class, nextId++, Side.CLIENT);
+		instance.registerMessage(CUpdateCooldownMessage.Handler.class, CUpdateCooldownMessage.class, nextId++, Side.CLIENT);
 
 
 

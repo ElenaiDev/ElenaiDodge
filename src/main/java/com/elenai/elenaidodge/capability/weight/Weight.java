@@ -2,15 +2,15 @@ package com.elenai.elenaidodge.capability.weight;
 
 public class Weight implements IWeight {
 
-	private int weight = 0;
+	private double weight = 0;
 
 	@Override
-	public void set(int weight) {
+	public void set(double weight) {
 		this.weight = weight;
 	}
 
 	@Override
-	public int getWeight() {
+	public double getWeight() {
 		return this.weight;
 	}
 

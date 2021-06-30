@@ -3,9 +3,13 @@ package com.elenai.elenaidodge.event;
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.api.DodgeEvent.ServerDodgeEvent;
 import com.elenai.elenaidodge.init.PotionInit;
+import com.elenai.elenaidodge.network.PacketHandler;
+import com.elenai.elenaidodge.network.message.CUpdateCooldownMessage;
 import com.elenai.elenaidodge.util.Utils;
+import com.elenai.elenaidodge.util.WeightTier;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,6 +21,12 @@ public class ServerDodgeEventListener {
 
 		EntityPlayer player = event.getPlayer();
 
+		if (ModConfig.common.weights.enable) {
+			WeightTier weightTier = Utils.getWeightTier(player);
+			event.setForce(weightTier.getForce());
+			PacketHandler.instance.sendTo(new CUpdateCooldownMessage(Utils.getWeightTier(player).getCooldown()), (EntityPlayerMP) player);
+		}
+		
 		// Condition Checks
 		if (!player.onGround && !ModConfig.common.balance.enableWhilstAirborne) {
 			event.setCanceled(true);
@@ -38,7 +48,6 @@ public class ServerDodgeEventListener {
 			event.setCanceled(true);
 		}
 
-
 		if (player.isRiding()) {
 			event.setCanceled(true);
 		}
@@ -46,7 +55,7 @@ public class ServerDodgeEventListener {
 		if (!player.isCreative() && !player.isSpectator() && event.getCooldown() > 0) {
 			event.setCanceled(true);
 		}
-		
+
 		for (String i : ModConfig.common.balance.potions) {
 			player.getActivePotionEffects().forEach(p -> {
 				if (p.getPotion().getRegistryName().equals(new ResourceLocation(i))) {
@@ -80,7 +89,7 @@ public class ServerDodgeEventListener {
 			event.setForce(
 					(event.getForce() / (player.getActivePotionEffect(PotionInit.FEEBLE_EFFECT).getAmplifier() + 2)));
 		}
-
+		
 		// Put this after all force alterations!
 		if (event.getForce() <= 0) {
 			event.setCanceled(true);
