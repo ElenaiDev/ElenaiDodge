@@ -1,5 +1,5 @@
 key.elenaidodge.dodge=Dodge
-elenaidodge.general.common.weights.weights=Weights Override
+elenaidodge.general.common.skystrides.skystrides=Skystrides Override
 elenaidodge.general.common.balance.potions=Potion Blacklist
 
 reskillable.unlock.elenaidodge.dodge=Dodge
@@ -14,29 +14,35 @@ tutorial.doubledodge.description=Dash with %s
 tutorial.forwardsdoubledodge.title=Dodging
 tutorial.forwardsdoubledodge.description=Double tap %s, %s, %s or %s
 
-potion.effect.feathers=Potion of Feathers
-splash_potion.effect.feathers=Splash Potion of Feathers
-lingering_potion.effect.feathers=Lingering Potion of Feathers
-tipped_arrow.effect.feathers=Arrow of Feathers
-effect.feathers=Feathery
+potion.effect.can_dodge=Elenai's Blessing
+splash_potion.effect.can_dodge=Splash Potion of Elenai's Blessing
+lingering_potion.effect.can_dodge=Lingering Potion of Elenai's Blessing
+tipped_arrow.effect.can_dodge=Arrow of Elenai's Blessing
+effect.can_dodge=Elenai's Blessing
 
-potion.effect.replenishment=Potion of Replenishment
-splash_potion.effect.replenishment=Splash Potion of Replenishment
-lingering_potion.effect.replenishment=Lingering Potion of Replenishment
-tipped_arrow.effect.replenishment=Arrow of Replenishment
-effect.replenishment=Replenishment
+potion.effect.sluggish=Potion of Sluggish
+splash_potion.effect.sluggish=Splash Potion of Sluggish
+lingering_potion.effect.sluggish=Lingering Potion of Sluggish
+tipped_arrow.effect.sluggish=Arrow of Sluggish
+effect.sluggish=Sluggish
 
-potion.effect.weight=Potion of Weight
-splash_potion.effect.weight=Splash Potion of Weight
-lingering_potion.effect.weight=Lingering Potion of Weight
-tipped_arrow.effect.weight=Arrow of Weight
-effect.weight=Weight
+potion.effect.skystride=Potion of Skystride
+splash_potion.effect.skystride=Splash Potion of Skystride
+lingering_potion.effect.skystride=Lingering Potion of Skystride
+tipped_arrow.effect.skystride=Arrow of Skystride
+effect.skystride=Skystride
 
-potion.effect.endurance=Potion of Endurance
-splash_potion.effect.endurance=Splash Potion of Endurance
-lingering_potion.effect.endurance=Lingering Potion of Endurance
-tipped_arrow.effect.endurance=Arrow of Endurance
-effect.endurance=Endurance
+potion.effect.nimble=Potion of the Nimble
+splash_potion.effect.nimble=Splash Potion of the Nimble
+lingering_potion.effect.nimble=Lingering Potion of the Nimble
+tipped_arrow.effect.nimble=Arrow of the Nimble
+effect.nimble=Nimble
+
+potion.effect.climber=Potion of the Climber
+splash_potion.effect.climber=Splash Potion of the Climber
+lingering_potion.effect.climber=Lingering Potion of the Climber
+tipped_arrow.effect.climber=Arrow of the Climber
+effect.climber=Climber
 
 potion.effect.forceful=Potion of Forcefulness
 splash_potion.effect.forceful=Splash Potion of Forcefulness
@@ -51,8 +57,8 @@ tipped_arrow.effect.feeble=Arrow of Feebleness
 effect.feeble=Feeble
 
 enchantment.lightweight=Lightweight
-enchantment.lightweight.desc=Decreases Weight to provide more Dodges.
-enchantment.elenaidodge.lightweight.desc=Decreases Weight to provide more Dodges.
+enchantment.lightweight.desc=Decreases weight to provide more Dodges.
+enchantment.elenaidodge.lightweight.desc=Decreases weight to provide more Dodges.
 
 item.elenaidodge.golden_feather.name=Gold Feathery Ingot
 item.elenaidodge.iron_feather.name=Iron Feathery Ingot

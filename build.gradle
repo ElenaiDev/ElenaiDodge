@@ -66,6 +66,10 @@ repositories {
         name 'tehnut'
         url 'http://tehnut.info/maven/'
     }
+     maven { 
+     	name 'blamejared'
+     	url 'https://mmdmaven.blamejared.com' 
+    }
 }
 
 dependencies {
@@ -77,6 +81,8 @@ dependencies {
     deobfCompile 'constructs-armory:conarm:1.12.2:1.2.5.4'
 	
 	deobfCompile "curse.maven:reskillable-286382:2815686"
+	compile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.590"
+    compile "net.darkhax.gamestages:GameStages-1.12.2:2.0.123"
 
 }
 

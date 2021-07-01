@@ -28,10 +28,23 @@ public class ServerDodgeEventListener {
 		}
 		
 		// Condition Checks
-		if (!player.onGround && !ModConfig.common.balance.enableWhilstAirborne) {
+		if (!player.onGround && !ModConfig.common.balance.enableWhilstAirborne && !player.isPotionActive(PotionInit.SKYSTRIDE_EFFECT) && !Utils.hasAirborneGamestage(player)) {
+			event.setCanceled(true);
+		}
+		
+		if (ModConfig.common.gamestages.enable && !Utils.hasGamestage(player )) {
 			event.setCanceled(true);
 		}
 
+
+		if (player.isPotionActive(PotionInit.SLUGGISH_EFFECT)) {
+			event.setCanceled(true);
+		}
+		
+		if (ModConfig.common.balance.requiresPotion && !player.isPotionActive(PotionInit.CAN_DODGE_EFFECT)) {
+			event.setCanceled(true);
+		}
+		
 		if (!Utils.dodgeTraitUnlocked(player)) {
 			event.setCanceled(true);
 		}
@@ -63,7 +76,7 @@ public class ServerDodgeEventListener {
 				}
 			});
 		}
-
+		
 		// Alterations
 		if (player.isPotionActive(MobEffects.SLOWNESS)) {
 			event.setForce(event.getForce() / (player.getActivePotionEffect(MobEffects.SLOWNESS).getAmplifier() + 2));

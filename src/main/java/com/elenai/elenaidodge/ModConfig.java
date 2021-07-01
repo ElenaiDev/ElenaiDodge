@@ -59,12 +59,12 @@ public class ModConfig {
 		public class Balance {
 			
 			@Name("Cooldown Speed")
-			@Comment("The amount of ticks required for the Dodge cooldown to fully decrease.")
+			@Comment("The amount of ticks required for the Dodge cooldown to fully decrease when Armor Weights are disabled.")
 			@RangeInt(min = 0, max = Integer.MAX_VALUE)
 			public int regenSpeed = 20;
 
 			@Name("Force")
-			@Comment("The force of the player's dodge before any multipliers have been applied. This value is very sensitive.")
+			@Comment("The force of the player's dodge before any multipliers have been applied and when Armor Weights are disabled. This value is very sensitive.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
 			public double force = 0.6;
 
@@ -103,6 +103,10 @@ public class ModConfig {
 			@Name("Potion Blacklist")
 			@Comment("Potions that prevent the player from dodging. Insert values in the format modid:potion. Idea Credit: SandwichHorror")
 			public String[] potions = {};
+			
+			@Name("Requires Dodge Potion")
+			@Comment("Whether the player requires the potion effect 'can_dodge' to dodge.")
+			public boolean requiresPotion = false;
 		}
 
 		public Weights weights = new Weights();
@@ -110,7 +114,7 @@ public class ModConfig {
 		public class Weights {
 
 			@Name("Weights Override")
-			@Comment("The weight of each item of Armor. This overrides the default generated values. Insert values as such: modid:itemname=value. Idea Credit: SandwichHorror")
+			@Comment("The weight of each item of Armor. This overrides the default generated values and can be a decimal. Insert values as such: modid:itemname=value. Idea Credit: SandwichHorror")
 			public String[] weights = { "minecraft:leather_boots=1", "minecraft:leather_leggings=2",
 					"minecraft:leather_chestplate=3", "minecraft:leather_helmet=1", "minecraft:iron_boots=2",
 					"minecraft:iron_leggings=3", "minecraft:iron_chestplate=5", "minecraft:iron_helmet=3",
@@ -246,6 +250,22 @@ public class ModConfig {
 			@Name("Enable Weights")
 			@Comment("Enables the Weight System")
 			public boolean enable = true;
+		}
+		
+		public Gamestages gamestages = new Gamestages();
+
+		public class Gamestages {
+			@Name("Dodging Requires Gamestage")
+			@Comment("Whether the player requires a gamestage to dodge =! Requires GameStages to be Installed !=")
+			public boolean enable = false;
+			
+			@Name("Dodging Gamestage Name")
+			@Comment("The name of the required gamestage =! Requires GameStages to be Installed !=")
+			public String name = "elenai_dodge";
+			
+			@Name("Airborne Gamestage Name")
+			@Comment("The name of a gamestage that will allow the player to dodge in midair. This does not require 'Dodging Requires Gamestage' to be enabled to work. =! Requires GameStages to be Installed !=")
+			public String nameAirborne = "elenai_dodge_airborne";
 		}
 
 		public Misc misc = new Misc();

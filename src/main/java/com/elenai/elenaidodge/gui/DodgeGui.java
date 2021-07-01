@@ -34,7 +34,7 @@ public class DodgeGui {
 				enableAlpha(alpha);
 
 				int i = Minecraft.getMinecraft().gameSettings.thirdPersonView > 0
-						? event.getResolution().getScaledHeight() - 54 + 3
+						? event.getResolution().getScaledHeight() - 64 + 3
 						: (event.getResolution().getScaledHeight() / 2 - 7 + 16);
 				int j = event.getResolution().getScaledWidth() / 2 - 8 - 5;
 				if (alpha > 0 && ClientStorage.dodges > 0) {

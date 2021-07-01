@@ -26,6 +26,9 @@ public class ClientTickEventListener {
 	public static int failedFlashes = 2;
 
 	public static int alpha = alphaLen;
+	
+	public static boolean stepVisible = false;
+	public static int toastCountdown = 0;
 
 	@SubscribeEvent
 	public void onPlayerClientTick(TickEvent.ClientTickEvent event) {
@@ -40,12 +43,23 @@ public class ClientTickEventListener {
 				if (!ClientStorage.shownTutorial && ModConfig.client.hud.tutorial) {
 					DodgeStep.show();
 					ClientStorage.shownTutorial = true;
+					stepVisible = true;
+
 				}
 
+				if (ClientStorage.shownTutorial == true && stepVisible == true) {
+					toastCountdown++;
+				}
+				
+				if(toastCountdown == 300) {
+					ClientStorage.tutorialDodges = 1;
+				}
+				
 				if (ClientStorage.tutorialDodges == 1) {
 					DodgeStep.hide();
+					stepVisible = false;
 				}
-
+				
 				// COOLDOWN
 				if (ClientStorage.cooldown > 0) {
 					ClientStorage.cooldown--;

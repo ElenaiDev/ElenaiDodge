@@ -112,7 +112,7 @@ public class Utils {
 	 * @param player
 	 */
 	public static void initPlayer(EntityPlayer player) {
-		PacketHandler.instance.sendTo(new CInitPlayerMessage(20), (EntityPlayerMP) player);
+		PacketHandler.instance.sendTo(new CInitPlayerMessage(), (EntityPlayerMP) player);
 	}
 
 	/**
@@ -218,11 +218,34 @@ public class Utils {
 														// tierValue[2] is force
 			IWeight w = player.getCapability(WeightProvider.WEIGHT_CAP, null);
 			if (w.getWeight() >= Double.valueOf(tierValue[0])) {
-				System.out.println(tierValue);
 				return new WeightTier(Double.valueOf(tierValue[0]), Integer.valueOf(tierValue[1]),
 						Double.valueOf(tierValue[2]));
 			}
 		}
 		return new WeightTier(0, ModConfig.common.balance.regenSpeed, ModConfig.common.balance.force);
+	}
+	
+	/**
+	 * Whether the player has the required dodging gamestage. If gamestages is not installed, will simply return true.
+	 * @param player
+	 * @return
+	 */
+	public static boolean hasGamestage(EntityPlayer player) {
+		if (!Loader.isModLoaded("gamestages")) {
+			return true;
+		}
+		return net.darkhax.gamestages.GameStageHelper.hasStage(player, ModConfig.common.gamestages.name);
+	}
+	
+	/**
+	 * Whether the player has the required airborne gamestage. If gamestages is not installed, will simply return false.
+	 * @param player
+	 * @return
+	 */
+	public static boolean hasAirborneGamestage(EntityPlayer player) {
+		if (!Loader.isModLoaded("gamestages")) {
+			return false;
+		}
+		return net.darkhax.gamestages.GameStageHelper.hasStage(player, ModConfig.common.gamestages.nameAirborne);
 	}
 }
