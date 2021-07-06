@@ -11,6 +11,7 @@ import com.elenai.elenaidodge.network.message.CUpdateRegenMessage;
 import com.elenai.elenaidodge.network.message.CUpdateWeightMessage;
 import com.elenai.elenaidodge.network.message.CVelocityMessage;
 import com.elenai.elenaidodge.network.message.SDodgeMessage;
+import com.elenai.elenaidodge.network.message.SWallJumpMessage;
 import com.elenai.elenaidodge.network.message.SWeightMessage;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -28,6 +29,7 @@ public class PacketHandler {
 		// Server Side Logic
 		instance.registerMessage(SDodgeMessage.Handler.class, SDodgeMessage.class, nextId++, Side.SERVER);
 		instance.registerMessage(SWeightMessage.Handler.class, SWeightMessage.class, nextId++, Side.SERVER);
+		instance.registerMessage(SWallJumpMessage.Handler.class, SWallJumpMessage.class, nextId++, Side.SERVER);
 
 		
 		// Client Side Logic

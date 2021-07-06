@@ -1,11 +1,16 @@
 package com.elenai.elenaidodge.capability;
 
 import com.elenai.elenaidodge.ElenaiDodge;
+import com.elenai.elenaidodge.capability.airborne.AirborneProvider;
+import com.elenai.elenaidodge.capability.airborne.IAirborne;
+import com.elenai.elenaidodge.capability.enabled.EnabledProvider;
+import com.elenai.elenaidodge.capability.enabled.IEnabled;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
 import com.elenai.elenaidodge.capability.joined.IJoined;
 import com.elenai.elenaidodge.capability.joined.JoinedProvider;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
 import com.elenai.elenaidodge.capability.regen.RegenProvider;
+import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
 import com.elenai.elenaidodge.capability.weight.WeightProvider;
 
 import net.minecraft.entity.Entity;
@@ -22,6 +27,9 @@ public class CapabilityHandler {
 	public static final ResourceLocation INVINCIBILITY_CAP = new ResourceLocation(ElenaiDodge.MODID, "invincibility");
 	public static final ResourceLocation PARTICLES_CAP = new ResourceLocation(ElenaiDodge.MODID, "particles");
 	public static final ResourceLocation REGEN_CAP = new ResourceLocation(ElenaiDodge.MODID, "regen");
+	public static final ResourceLocation ENABLED_CAP = new ResourceLocation(ElenaiDodge.MODID, "enabled");
+	public static final ResourceLocation AIRBORNE_CAP = new ResourceLocation(ElenaiDodge.MODID, "airborne");
+	public static final ResourceLocation WALLJUMPS_CAP = new ResourceLocation(ElenaiDodge.MODID, "walljumps");
 
 
 	@SubscribeEvent
@@ -42,6 +50,15 @@ public class CapabilityHandler {
 			if (!event.getObject().hasCapability(RegenProvider.REGEN_CAP, null)) {
 				event.addCapability(REGEN_CAP, new RegenProvider());
 			}
+			if (!event.getObject().hasCapability(EnabledProvider.ENABLED_CAP, null)) {
+				event.addCapability(ENABLED_CAP, new EnabledProvider());
+			}
+			if (!event.getObject().hasCapability(AirborneProvider.AIRBORNE_CAP, null)) {
+				event.addCapability(AIRBORNE_CAP, new AirborneProvider());
+			}
+			if (!event.getObject().hasCapability(WallJumpsProvider.WALLJUMPS_CAP, null)) {
+				event.addCapability(WALLJUMPS_CAP, new WallJumpsProvider());
+			}
 		}
 	}
 
@@ -52,7 +69,15 @@ public class CapabilityHandler {
 		IJoined joined = player.getCapability(JoinedProvider.JOINED_CAP, null);
 		IJoined oldJoined = event.getOriginal().getCapability(JoinedProvider.JOINED_CAP, null);
 		joined.set(oldJoined.hasJoined());
+		
+		IEnabled enabled = player.getCapability(EnabledProvider.ENABLED_CAP, null);
+		IEnabled oldEnabled = event.getOriginal().getCapability(EnabledProvider.ENABLED_CAP, null);
+		enabled.set(oldEnabled.isEnabled());
 
+		IAirborne airborne = player.getCapability(AirborneProvider.AIRBORNE_CAP, null);
+		IAirborne oldAirborne = event.getOriginal().getCapability(AirborneProvider.AIRBORNE_CAP, null);
+		airborne.set(oldAirborne.isEnabled());
+		
 
 	}
 

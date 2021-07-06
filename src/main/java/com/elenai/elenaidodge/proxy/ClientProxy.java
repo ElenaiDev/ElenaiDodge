@@ -2,10 +2,13 @@ package com.elenai.elenaidodge.proxy;
 
 import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.event.ArmorTickEventListener;
+import com.elenai.elenaidodge.event.CameraEventListener;
 import com.elenai.elenaidodge.event.ClientTickEventListener;
 import com.elenai.elenaidodge.event.CoreDodgeEventListener;
+import com.elenai.elenaidodge.event.CoreWallJumpEventListener;
 import com.elenai.elenaidodge.event.InputEventListener;
 import com.elenai.elenaidodge.event.TooltipEventListener;
+import com.elenai.elenaidodge.event.WallJumpInputEventListener;
 import com.elenai.elenaidodge.gui.DodgeGui;
 import com.elenai.elenaidodge.util.Keybinds;
 import com.elenai.elenaidodge.util.PatronRewardHandler;
@@ -34,10 +37,14 @@ public class ClientProxy extends CommonProxy {
 		PatronRewardHandler.setupClient();
 		Keybinds.register();
 		MinecraftForge.EVENT_BUS.register(new InputEventListener());
+		MinecraftForge.EVENT_BUS.register(new WallJumpInputEventListener());
+		MinecraftForge.EVENT_BUS.register(new CoreWallJumpEventListener());
 		MinecraftForge.EVENT_BUS.register(new CoreDodgeEventListener());
 		MinecraftForge.EVENT_BUS.register(new ArmorTickEventListener());
 		MinecraftForge.EVENT_BUS.register(new TooltipEventListener());
 		MinecraftForge.EVENT_BUS.register(new ClientTickEventListener());
+
+		MinecraftForge.EVENT_BUS.register(new CameraEventListener());
 
 
 	}

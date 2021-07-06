@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 public class ReskillableTraitDodge extends Trait {
 	
     public ReskillableTraitDodge() {
-    	super(new ResourceLocation(ElenaiDodge.MODID, "dodge"), 4, 2, new ResourceLocation(MOD_ID, "agility"), 0, "");
+    	super(new ResourceLocation(ElenaiDodge.MODID, "dodge"), 2, 0, new ResourceLocation(MOD_ID, "agility"), 0, "");
     	 if (FMLCommonHandler.instance().getSide().isClient()) {
              MinecraftForge.EVENT_BUS.register(this);
          }

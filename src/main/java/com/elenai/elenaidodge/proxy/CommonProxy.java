@@ -2,6 +2,12 @@ package com.elenai.elenaidodge.proxy;
 
 import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.capability.CapabilityHandler;
+import com.elenai.elenaidodge.capability.airborne.Airborne;
+import com.elenai.elenaidodge.capability.airborne.AirborneStorage;
+import com.elenai.elenaidodge.capability.airborne.IAirborne;
+import com.elenai.elenaidodge.capability.enabled.Enabled;
+import com.elenai.elenaidodge.capability.enabled.EnabledStorage;
+import com.elenai.elenaidodge.capability.enabled.IEnabled;
 import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
 import com.elenai.elenaidodge.capability.invincibility.Invincibility;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityStorage;
@@ -14,6 +20,9 @@ import com.elenai.elenaidodge.capability.particles.ParticlesStorage;
 import com.elenai.elenaidodge.capability.regen.IRegen;
 import com.elenai.elenaidodge.capability.regen.Regen;
 import com.elenai.elenaidodge.capability.regen.RegenStorage;
+import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
+import com.elenai.elenaidodge.capability.walljumps.WallJumps;
+import com.elenai.elenaidodge.capability.walljumps.WallJumpsStorage;
 import com.elenai.elenaidodge.capability.weight.IWeight;
 import com.elenai.elenaidodge.capability.weight.Weight;
 import com.elenai.elenaidodge.capability.weight.WeightStorage;
@@ -22,6 +31,7 @@ import com.elenai.elenaidodge.event.InvincibilityEventListener;
 import com.elenai.elenaidodge.event.PotionTickEventListener;
 import com.elenai.elenaidodge.event.RenderEventListener;
 import com.elenai.elenaidodge.event.ServerDodgeEventListener;
+import com.elenai.elenaidodge.event.ServerWallJumpEventListener;
 import com.elenai.elenaidodge.event.TickEventListener;
 import com.elenai.elenaidodge.init.EnchantmentInit;
 import com.elenai.elenaidodge.init.ItemInit;
@@ -49,7 +59,9 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(IInvincibility.class, new InvincibilityStorage(), Invincibility::new);
 		CapabilityManager.INSTANCE.register(IParticles.class, new ParticlesStorage(), Particles::new);
 		CapabilityManager.INSTANCE.register(IRegen.class, new RegenStorage(), Regen::new);
-
+		CapabilityManager.INSTANCE.register(IEnabled.class, new EnabledStorage(), Enabled::new);
+		CapabilityManager.INSTANCE.register(IAirborne.class, new AirborneStorage(), Airborne::new);
+		CapabilityManager.INSTANCE.register(IWallJumps.class, new WallJumpsStorage(), WallJumps::new);
 
 		MinecraftForge.EVENT_BUS.register(new RenderEventListener());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentInit());
@@ -67,6 +79,9 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new PotionTickEventListener());
 		MinecraftForge.EVENT_BUS.register(new ItemInit());
 		MinecraftForge.EVENT_BUS.register(new InvincibilityEventListener());
+		
+		MinecraftForge.EVENT_BUS.register(new ServerWallJumpEventListener());
+
 	}
 	
 	@EventHandler

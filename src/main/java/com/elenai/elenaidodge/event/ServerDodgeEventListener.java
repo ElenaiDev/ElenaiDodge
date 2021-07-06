@@ -2,6 +2,10 @@ package com.elenai.elenaidodge.event;
 
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.api.DodgeEvent.ServerDodgeEvent;
+import com.elenai.elenaidodge.capability.airborne.AirborneProvider;
+import com.elenai.elenaidodge.capability.airborne.IAirborne;
+import com.elenai.elenaidodge.capability.enabled.EnabledProvider;
+import com.elenai.elenaidodge.capability.enabled.IEnabled;
 import com.elenai.elenaidodge.init.PotionInit;
 import com.elenai.elenaidodge.network.PacketHandler;
 import com.elenai.elenaidodge.network.message.CUpdateCooldownMessage;
@@ -24,29 +28,42 @@ public class ServerDodgeEventListener {
 		if (ModConfig.common.weights.enable) {
 			WeightTier weightTier = Utils.getWeightTier(player);
 			event.setForce(weightTier.getForce());
-			PacketHandler.instance.sendTo(new CUpdateCooldownMessage(Utils.getWeightTier(player).getCooldown()), (EntityPlayerMP) player);
+			PacketHandler.instance.sendTo(new CUpdateCooldownMessage(Utils.getWeightTier(player).getCooldown()),
+					(EntityPlayerMP) player);
 		}
-		
+
 		// Condition Checks
-		if (!player.onGround && !ModConfig.common.balance.enableWhilstAirborne && !player.isPotionActive(PotionInit.SKYSTRIDE_EFFECT) && !Utils.hasAirborneGamestage(player)) {
-			event.setCanceled(true);
-		}
-		
-		if (ModConfig.common.gamestages.enable && !Utils.hasGamestage(player )) {
+		IAirborne a = player.getCapability(AirborneProvider.AIRBORNE_CAP, null);
+
+		if (!player.onGround && !ModConfig.common.balance.enableWhilstAirborne
+				&& !player.isPotionActive(PotionInit.SKYSTRIDE_EFFECT) && !Utils.hasAirborneGamestage(player)
+				&& !a.isEnabled()) {
 			event.setCanceled(true);
 		}
 
+		if (ModConfig.common.gamestages.enable && !Utils.hasGamestage(player)) {
+			event.setCanceled(true);
+
+		}
+
+		IEnabled e = player.getCapability(EnabledProvider.ENABLED_CAP, null);
+		if (!e.isEnabled()) {
+			event.setCanceled(true);
+
+		}
 
 		if (player.isPotionActive(PotionInit.SLUGGISH_EFFECT)) {
 			event.setCanceled(true);
+
 		}
-		
+
 		if (ModConfig.common.balance.requiresPotion && !player.isPotionActive(PotionInit.CAN_DODGE_EFFECT)) {
 			event.setCanceled(true);
 		}
-		
+
 		if (!Utils.dodgeTraitUnlocked(player)) {
 			event.setCanceled(true);
+
 		}
 
 		if (player.getFoodStats().getFoodLevel() <= ModConfig.common.balance.hunger) {
@@ -76,7 +93,7 @@ public class ServerDodgeEventListener {
 				}
 			});
 		}
-		
+
 		// Alterations
 		if (player.isPotionActive(MobEffects.SLOWNESS)) {
 			event.setForce(event.getForce() / (player.getActivePotionEffect(MobEffects.SLOWNESS).getAmplifier() + 2));
@@ -102,7 +119,7 @@ public class ServerDodgeEventListener {
 			event.setForce(
 					(event.getForce() / (player.getActivePotionEffect(PotionInit.FEEBLE_EFFECT).getAmplifier() + 2)));
 		}
-		
+
 		// Put this after all force alterations!
 		if (event.getForce() <= 0) {
 			event.setCanceled(true);

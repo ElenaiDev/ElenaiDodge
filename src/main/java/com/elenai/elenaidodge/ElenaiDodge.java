@@ -3,7 +3,10 @@ package com.elenai.elenaidodge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.elenai.elenaidodge.command.MainCommandTree;
 import com.elenai.elenaidodge.integration.ReskillableTraitDodge;
+import com.elenai.elenaidodge.integration.ReskillableTraitLedgeGrab;
+import com.elenai.elenaidodge.integration.ReskillableTraitWallJump;
 import com.elenai.elenaidodge.proxy.CommonProxy;
 
 import net.minecraftforge.fml.common.Loader;
@@ -13,6 +16,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = ElenaiDodge.MODID, name = ElenaiDodge.NAME, version = ElenaiDodge.VERSION, dependencies = "before:rustic;after:quark")
 public class ElenaiDodge
@@ -38,8 +42,8 @@ public class ElenaiDodge
 		proxy.init(event);
 
 		if (Loader.isModLoaded("reskillable")) {
-			codersafterdark.reskillable.api.ReskillableRegistries.UNLOCKABLES.register(
-                new ReskillableTraitDodge()
+			codersafterdark.reskillable.api.ReskillableRegistries.UNLOCKABLES.registerAll(
+                new ReskillableTraitDodge(), new ReskillableTraitWallJump(), new ReskillableTraitLedgeGrab()
         );
 		}
 	}
@@ -47,6 +51,11 @@ public class ElenaiDodge
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
+	}
+	
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.registerServerCommand(new MainCommandTree()); // Register our command tree when the server loads.
 	}
 
 }

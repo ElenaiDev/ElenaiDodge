@@ -284,6 +284,60 @@ public class ModConfig {
 			@Comment("Whether the Player's dodge creates a puff of smoke.")
 			public boolean particles = true;
 		}
+		
+		public WallJump wallJump = new WallJump();
+
+		public class WallJump {
+
+			@Name("Enable WallJump")
+			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall.")
+			public boolean enable = false;
+			
+			@Name("Forwards Force")
+			@Comment("The forwards force of the player's wall jump. (How far they are pushed in the direction they are facing). This value is very sensitive.")
+			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
+			public double forwardsForce = 0.2;
+			
+			@Name("Outwards Force")
+			@Comment("The outwards force of the player's wall jump. (How far they are pushed away from the wall). This value is very sensitive.")
+			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
+			public double outwardsForce = 0.3;
+
+			@Name("Verticality")
+			@Comment("How high the player jumps. This value will affect distance jumped due to airtime.")
+			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
+			public double verticality = 0.32;
+
+			@Name("Exhaustion")
+			@Comment("How much exhaustion is added when wall jumping. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second.")
+			@RangeDouble(min = 0.0, max = 40.0)
+			public double exhaustion = 0.4;
+
+			@Name("Hunger Requirement")
+			@Comment("How many half drumsticks the player needs to wall jump. The default six is the same as sprinting.")
+			@RangeInt(min = -1, max = 20)
+			public int hunger = 6;
+
+			@Name("Forgiving Angle")
+			@Comment("Increase this value to allow the Player to Wall Jump when facing further towards the wall.")
+			@RangeInt(min = 0, max = 100)
+			public int forgiving = 10;
+			
+			@Name("Maximum Wall Jumps")
+			@Comment("How many Wall Jumps the player can perform before touching the ground again. Set this value to 0 to allow infinite Wall Jumps.")
+			@RangeInt(min = 0, max = 5)
+			public int maximum = 3;
+			
+			@Name("Distance")
+			@Comment("How much farther from the Wall you can stand to Wall Jump.")
+			@RangeDouble(min = 0, max = 1.5)
+			public double distance = 0.12;
+			
+			@Name("One Block Wall Jump")
+			@Comment("Whether the Player can Wall Jump in a one block gap.")
+			public boolean oneBlock = false;
+			
+		}
 	}
 
 }

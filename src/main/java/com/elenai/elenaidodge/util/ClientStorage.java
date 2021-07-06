@@ -18,5 +18,7 @@ public class ClientStorage {
 	public static double weight = 0;
 	public static int regenSpeed;
 	public static boolean weightsEnabled;
+	
+	public static int wallRunning = 0;
 
 }

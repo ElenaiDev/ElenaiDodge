@@ -8,9 +8,13 @@ import com.elenai.elenaidodge.ElenaiDodge;
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.api.DodgeEvent;
 import com.elenai.elenaidodge.api.DodgeEvent.Direction;
+import com.elenai.elenaidodge.api.LedgeGrabEvent;
+import com.elenai.elenaidodge.api.WallJumpEvent;
 import com.elenai.elenaidodge.capability.weight.IWeight;
 import com.elenai.elenaidodge.capability.weight.WeightProvider;
 import com.elenai.elenaidodge.effects.ServerDodgeEffects;
+import com.elenai.elenaidodge.effects.ServerLedgeGrabEffects;
+import com.elenai.elenaidodge.effects.ServerWallJumpEffects;
 import com.elenai.elenaidodge.network.PacketHandler;
 import com.elenai.elenaidodge.network.message.CDodgeEffectsMessage;
 import com.elenai.elenaidodge.network.message.CInitPlayerMessage;
@@ -122,7 +126,9 @@ public class Utils {
 	 * @param player
 	 */
 	public static void updateClientConfig(EntityPlayerMP player) {
-		PacketHandler.instance.sendTo(new CUpdateConfigMessage(ModConfig.common.weights.enable ? Utils.getWeightTier(player).getCooldown() : ModConfig.common.balance.regenSpeed,
+		PacketHandler.instance.sendTo(new CUpdateConfigMessage(
+				ModConfig.common.weights.enable ? Utils.getWeightTier(player).getCooldown()
+						: ModConfig.common.balance.regenSpeed,
 				arrayToString(ModConfig.common.weights.weights), ModConfig.common.weights.enable), player);
 	}
 
@@ -201,6 +207,42 @@ public class Utils {
 		}
 		return true;
 	}
+	
+	/**
+	 * Checks if the player has the Wall Jump trait added in Reskillable implementation.
+	 * If Reskillable is not installed, this will simply return true.
+	 * 
+	 * @return Dodge Trait Unlocked
+	 * @author Elenai
+	 */
+	public static boolean wallJumpTraitUnlocked(EntityPlayer player) {
+		if (Loader.isModLoaded("reskillable")) {
+			return (codersafterdark.reskillable.api.data.PlayerDataHandler.get(player)
+					.getSkillInfo(codersafterdark.reskillable.api.ReskillableRegistries.SKILLS
+							.getValue(new ResourceLocation(codersafterdark.reskillable.lib.LibMisc.MOD_ID, "agility")))
+					.isUnlocked(codersafterdark.reskillable.api.ReskillableRegistries.UNLOCKABLES
+							.getValue(new ResourceLocation(ElenaiDodge.MODID, "walljump"))));
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks if the player has the Ledge Grab trait added in Reskillable implementation.
+	 * If Reskillable is not installed, this will simply return true.
+	 * 
+	 * @return Dodge Trait Unlocked
+	 * @author Elenai
+	 */
+	public static boolean ledgeGrabTraitUnlocked(EntityPlayer player) {
+		if (Loader.isModLoaded("reskillable")) {
+			return (codersafterdark.reskillable.api.data.PlayerDataHandler.get(player)
+					.getSkillInfo(codersafterdark.reskillable.api.ReskillableRegistries.SKILLS
+							.getValue(new ResourceLocation(codersafterdark.reskillable.lib.LibMisc.MOD_ID, "agility")))
+					.isUnlocked(codersafterdark.reskillable.api.ReskillableRegistries.UNLOCKABLES
+							.getValue(new ResourceLocation(ElenaiDodge.MODID, "ledgegrab"))));
+		}
+		return true;
+	}
 
 	/**
 	 * Returns the players entry weight, dodge force and dodge cooldown. If it
@@ -224,9 +266,11 @@ public class Utils {
 		}
 		return new WeightTier(0, ModConfig.common.balance.regenSpeed, ModConfig.common.balance.force);
 	}
-	
+
 	/**
-	 * Whether the player has the required dodging gamestage. If gamestages is not installed, will simply return true.
+	 * Whether the player has the required dodging gamestage. If gamestages is not
+	 * installed, will simply return true.
+	 * 
 	 * @param player
 	 * @return
 	 */
@@ -236,9 +280,11 @@ public class Utils {
 		}
 		return net.darkhax.gamestages.GameStageHelper.hasStage(player, ModConfig.common.gamestages.name);
 	}
-	
+
 	/**
-	 * Whether the player has the required airborne gamestage. If gamestages is not installed, will simply return false.
+	 * Whether the player has the required airborne gamestage. If gamestages is not
+	 * installed, will simply return false.
+	 * 
 	 * @param player
 	 * @return
 	 */
@@ -247,5 +293,62 @@ public class Utils {
 			return false;
 		}
 		return net.darkhax.gamestages.GameStageHelper.hasStage(player, ModConfig.common.gamestages.nameAirborne);
+	}
+
+	/**
+	 * Wall Jumps the player.
+	 * 
+	 * @param direction
+	 * @param player
+	 * @author Elenai
+	 * @side Server
+	 */
+	public static void handleWallJump(WallJumpEvent.ServerWallJumpEvent event, EntityPlayerMP player) {
+
+		double f = event.getForce();
+		com.elenai.elenaidodge.api.WallJumpEvent.Direction dir = event.getDirection();
+		double motionX;
+		double motionZ;
+
+		motionX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(1 / 180.0F * (float) Math.PI) * f);
+		motionZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(1 / 180.0F * (float) Math.PI) * f);
+
+		switch (dir) {
+		case NORTH:
+			motionZ -= ModConfig.common.wallJump.outwardsForce;
+			break;
+		case EAST:
+			motionX += ModConfig.common.wallJump.outwardsForce;
+			break;
+		case SOUTH:
+			motionZ += ModConfig.common.wallJump.outwardsForce;
+			break;
+		case WEST:
+			motionX -= ModConfig.common.wallJump.outwardsForce;
+			break;
+		default:
+			break;
+		}
+
+		setPlayerVelocity(motionX, ModConfig.common.wallJump.verticality, motionZ, player);
+		ServerWallJumpEffects.run(player);
+	}
+	
+	/**
+	 * Wall Jumps the player.
+	 * 
+	 * @param direction
+	 * @param player
+	 * @author Elenai
+	 * @side Server
+	 */
+	public static void handleLedgeGrab(LedgeGrabEvent.ServerLedgeGrabEvent event, EntityPlayerMP player) {
+
+		double f = event.getForce();
+		com.elenai.elenaidodge.api.LedgeGrabEvent.Direction dir = event.getDirection();
+		
+		ServerLedgeGrabEffects.run(player);
 	}
 }

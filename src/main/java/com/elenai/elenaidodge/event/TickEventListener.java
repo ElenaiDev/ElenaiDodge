@@ -4,6 +4,8 @@ import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
 import com.elenai.elenaidodge.capability.particles.IParticles;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
+import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
+import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
 import com.elenai.elenaidodge.network.PacketHandler;
 import com.elenai.elenaidodge.network.message.CParticleMessage;
 import com.elenai.elenaidodge.util.PatronRewardHandler;
@@ -15,13 +17,18 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class TickEventListener {
 
 	@SubscribeEvent
-	public void onClientPlayerTick(TickEvent.PlayerTickEvent event) {
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
 		// SERVER
 		if (event.phase == TickEvent.Phase.END && !event.player.world.isRemote) {
 			IInvincibility i = event.player.getCapability(InvincibilityProvider.INVINCIBILITY_CAP, null);
 			if (i.getInvincibility() > 0) {
 				i.set(i.getInvincibility() - 1);
+			}
+
+			IWallJumps w = event.player.getCapability(WallJumpsProvider.WALLJUMPS_CAP, null);
+			if(event.player.onGround && w.getWallJumps() > 0) {
+				w.set(0);
 			}
 			
 			IParticles p = event.player.getCapability(ParticlesProvider.PARTICLES_CAP, null);

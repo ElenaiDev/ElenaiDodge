@@ -32,7 +32,7 @@ public class InputEventListener {
 	public static HashMap<KeyBinding, Long> keyTimesLastPressed = new HashMap<>();
 	public static HashMap<KeyBinding, Boolean> keyLastState = new HashMap<>();
 	public static HashMap<KeyBinding, String> lookupKeyToDirection = new HashMap<>();
-
+	
 	@SubscribeEvent
 	public void onKeyInput(TickEvent.ClientTickEvent event) {
 
