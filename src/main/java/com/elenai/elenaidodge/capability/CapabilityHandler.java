@@ -8,6 +8,7 @@ import com.elenai.elenaidodge.capability.enabled.IEnabled;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
 import com.elenai.elenaidodge.capability.joined.IJoined;
 import com.elenai.elenaidodge.capability.joined.JoinedProvider;
+import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsProvider;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
 import com.elenai.elenaidodge.capability.regen.RegenProvider;
 import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
@@ -30,6 +31,7 @@ public class CapabilityHandler {
 	public static final ResourceLocation ENABLED_CAP = new ResourceLocation(ElenaiDodge.MODID, "enabled");
 	public static final ResourceLocation AIRBORNE_CAP = new ResourceLocation(ElenaiDodge.MODID, "airborne");
 	public static final ResourceLocation WALLJUMPS_CAP = new ResourceLocation(ElenaiDodge.MODID, "walljumps");
+	public static final ResourceLocation LEDGEGRABS_CAP = new ResourceLocation(ElenaiDodge.MODID, "ledgegrabs");
 
 
 	@SubscribeEvent
@@ -58,6 +60,9 @@ public class CapabilityHandler {
 			}
 			if (!event.getObject().hasCapability(WallJumpsProvider.WALLJUMPS_CAP, null)) {
 				event.addCapability(WALLJUMPS_CAP, new WallJumpsProvider());
+			}
+			if (!event.getObject().hasCapability(LedgeGrabsProvider.LEDGEGRABS_CAP, null)) {
+				event.addCapability(LEDGEGRABS_CAP, new LedgeGrabsProvider());
 			}
 		}
 	}

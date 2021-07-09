@@ -38,7 +38,7 @@ public class ClientTickEventListener {
 			// CLIENT
 			if (event.phase == TickEvent.Phase.END && player.world.isRemote
 					&& !Minecraft.getMinecraft().isGamePaused()) {
-
+				
 				// Tutorial
 				if (!ClientStorage.shownTutorial && ModConfig.client.hud.tutorial) {
 					DodgeStep.show();

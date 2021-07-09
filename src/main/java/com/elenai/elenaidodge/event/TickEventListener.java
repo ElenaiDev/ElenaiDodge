@@ -2,6 +2,8 @@ package com.elenai.elenaidodge.event;
 
 import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
+import com.elenai.elenaidodge.capability.ledgegrabs.ILedgeGrabs;
+import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsProvider;
 import com.elenai.elenaidodge.capability.particles.IParticles;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
 import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
@@ -29,6 +31,11 @@ public class TickEventListener {
 			IWallJumps w = event.player.getCapability(WallJumpsProvider.WALLJUMPS_CAP, null);
 			if(event.player.onGround && w.getWallJumps() > 0) {
 				w.set(0);
+			}
+			
+			ILedgeGrabs l = event.player.getCapability(LedgeGrabsProvider.LEDGEGRABS_CAP, null);
+			if(event.player.onGround && l.getLedgeGrabs() > 0) {
+				l.set(0);
 			}
 			
 			IParticles p = event.player.getCapability(ParticlesProvider.PARTICLES_CAP, null);

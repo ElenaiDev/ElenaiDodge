@@ -14,6 +14,9 @@ import com.elenai.elenaidodge.capability.invincibility.InvincibilityStorage;
 import com.elenai.elenaidodge.capability.joined.IJoined;
 import com.elenai.elenaidodge.capability.joined.Joined;
 import com.elenai.elenaidodge.capability.joined.JoinedStorage;
+import com.elenai.elenaidodge.capability.ledgegrabs.ILedgeGrabs;
+import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabs;
+import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsStorage;
 import com.elenai.elenaidodge.capability.particles.IParticles;
 import com.elenai.elenaidodge.capability.particles.Particles;
 import com.elenai.elenaidodge.capability.particles.ParticlesStorage;
@@ -31,6 +34,7 @@ import com.elenai.elenaidodge.event.InvincibilityEventListener;
 import com.elenai.elenaidodge.event.PotionTickEventListener;
 import com.elenai.elenaidodge.event.RenderEventListener;
 import com.elenai.elenaidodge.event.ServerDodgeEventListener;
+import com.elenai.elenaidodge.event.ServerLedgeGrabEventListener;
 import com.elenai.elenaidodge.event.ServerWallJumpEventListener;
 import com.elenai.elenaidodge.event.TickEventListener;
 import com.elenai.elenaidodge.init.EnchantmentInit;
@@ -62,6 +66,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(IEnabled.class, new EnabledStorage(), Enabled::new);
 		CapabilityManager.INSTANCE.register(IAirborne.class, new AirborneStorage(), Airborne::new);
 		CapabilityManager.INSTANCE.register(IWallJumps.class, new WallJumpsStorage(), WallJumps::new);
+		CapabilityManager.INSTANCE.register(ILedgeGrabs.class, new LedgeGrabsStorage(), LedgeGrabs::new);
 
 		MinecraftForge.EVENT_BUS.register(new RenderEventListener());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentInit());
@@ -81,6 +86,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new InvincibilityEventListener());
 		
 		MinecraftForge.EVENT_BUS.register(new ServerWallJumpEventListener());
+		MinecraftForge.EVENT_BUS.register(new ServerLedgeGrabEventListener());
 
 	}
 	

@@ -289,8 +289,8 @@ public class ModConfig {
 
 		public class WallJump {
 
-			@Name("Enable WallJump")
-			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall.")
+			@Name("Enable Wall Jump")
+			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall. This value does nothing if Reskillable is installed as wall jumping is unlocked as a trait.")
 			public boolean enable = false;
 			
 			@Name("Forwards Force")
@@ -336,6 +336,50 @@ public class ModConfig {
 			@Name("One Block Wall Jump")
 			@Comment("Whether the Player can Wall Jump in a one block gap.")
 			public boolean oneBlock = false;
+			
+			@Name("Falling Wall Jump")
+			@Comment("Whether the Player can Wall Jump when falling.")
+			public boolean falling = false;
+			
+		}
+		
+		public LedgeGrab ledgeGrab = new LedgeGrab();
+
+		public class LedgeGrab {
+
+			@Name("Enable Ledge Grab")
+			@Comment("Whether the Player can Ledge Grab by pressing jump again with their face to the top of a wall. This value does nothing if Reskillable is installed as ledge grabbing is unlocked as a trait.")
+			public boolean enable = false;
+			
+			@Name("Forwards Force")
+			@Comment("The forwards force of the player's ledge grab. (How far they are pushed in the direction they are facing). This value is very sensitive.")
+			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
+			public double forwardsForce = 0.2;
+			
+			@Name("Upwards Force")
+			@Comment("The upwards force of the player's ledge grab. (How far they are pushed upwards). This value is very sensitive.")
+			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
+			public double upwardsForce = 0.48;
+
+			@Name("Exhaustion")
+			@Comment("How much exhaustion is added when ledge grabbing. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second.")
+			@RangeDouble(min = 0.0, max = 40.0)
+			public double exhaustion = 0.4;
+
+			@Name("Hunger Requirement")
+			@Comment("How many half drumsticks the player needs to ledge grab. The default six is the same as sprinting.")
+			@RangeInt(min = -1, max = 20)
+			public int hunger = 6;
+			
+			@Name("Maximum Ledge Grabs")
+			@Comment("How many Ledge Grabs the player can perform before touching the ground again. Set this value to 0 to allow infinite Ledge Grabs.")
+			@RangeInt(min = 0, max = 5)
+			public int maximum = 3;
+			
+			@Name("Distance")
+			@Comment("How much farther from the Wall you can stand to Ledge Grab.")
+			@RangeDouble(min = 0, max = 1.5)
+			public double distance = 0.12;
 			
 		}
 	}

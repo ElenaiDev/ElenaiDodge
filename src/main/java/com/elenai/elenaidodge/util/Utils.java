@@ -347,8 +347,16 @@ public class Utils {
 	public static void handleLedgeGrab(LedgeGrabEvent.ServerLedgeGrabEvent event, EntityPlayerMP player) {
 
 		double f = event.getForce();
-		com.elenai.elenaidodge.api.LedgeGrabEvent.Direction dir = event.getDirection();
 		
+		double motionX;
+		double motionZ;
+
+		motionX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(1 / 180.0F * (float) Math.PI) * f);
+		motionZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(1 / 180.0F * (float) Math.PI) * f);
+		
+		setPlayerVelocity(motionX, ModConfig.common.ledgeGrab.upwardsForce, motionZ, player);
 		ServerLedgeGrabEffects.run(player);
 	}
 }

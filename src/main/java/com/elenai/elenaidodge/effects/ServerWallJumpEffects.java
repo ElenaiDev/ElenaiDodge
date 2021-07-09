@@ -17,6 +17,8 @@ public class ServerWallJumpEffects {
 	 */
 	public static void run(EntityPlayerMP player) {
 
+		//TODO: Check WallJump starting point, if 0 check the players height, then everytime they walljump higher than this / height of previous wall jump set fall damage to 0
+		
 		IWallJumps w = player.getCapability(WallJumpsProvider.WALLJUMPS_CAP, null);
 		w.increase(1);
 		
