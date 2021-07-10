@@ -17,6 +17,9 @@ public class PotionInit {
 	public static final Potion CAN_DODGE_EFFECT = new BasePotion("can_dodge", false, 197223223, 1, 0);
 	public static final Potion SLUGGISH_EFFECT = new BasePotion("sluggish", true, 1222513, 1, 1);
 	public static final Potion SKYSTRIDE_EFFECT = new BasePotion("skystride", false, 25324595, 2, 0);
+	
+	public static final Potion NIMBLE_EFFECT = new BasePotion("nimble", false, 197223223, 2, 1);
+	public static final Potion CLIMBER_EFFECT = new BasePotion("climber", false, 8714579, 3, 1);
 
 	public static final PotionType FORCEFUL = new PotionType("forceful", new PotionEffect[] {new PotionEffect(FORCEFUL_EFFECT, 3600)}).setRegistryName("forceful");
 	public static final PotionType LONG_FORCEFUL = new PotionType("forceful", new PotionEffect[] {new PotionEffect(FORCEFUL_EFFECT, 9600)}).setRegistryName("long_forceful");
@@ -38,6 +41,9 @@ public class PotionInit {
 		registerEffectOnly(CAN_DODGE_EFFECT);
 		registerPotion(SLUGGISH, LONG_SLUGGISH, SLUGGISH_EFFECT);
 		registerPotion(SKYSTRIDE, LONG_SKYSTRIDE, SKYSTRIDE_EFFECT);
+		registerEffectOnly(NIMBLE_EFFECT);
+		registerEffectOnly(CLIMBER_EFFECT);
+
 
 		registerPotionMixes();
 	}

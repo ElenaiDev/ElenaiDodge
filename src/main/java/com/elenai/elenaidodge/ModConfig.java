@@ -37,7 +37,7 @@ public class ModConfig {
 
 		public class Hud {
 			@Name("Show HUD")
-			@Comment("Whether to show the feathers in the UI.")
+			@Comment("Whether to show the cooldown UI.")
 			public boolean hud = true;
 
 			@Name("Show Tutorial")
@@ -290,7 +290,7 @@ public class ModConfig {
 		public class WallJump {
 
 			@Name("Enable Wall Jump")
-			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall. This value does nothing if Reskillable is installed as wall jumping is unlocked as a trait.")
+			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall. This value does nothing if Reskillable is installed as wall jumping is unlocked as a trait. This value can also be overriden by the 'Nimble' potion effect.")
 			public boolean enable = false;
 			
 			@Name("Forwards Force")
@@ -338,8 +338,13 @@ public class ModConfig {
 			public boolean oneBlock = false;
 			
 			@Name("Falling Wall Jump")
-			@Comment("Whether the Player can Wall Jump when falling.")
-			public boolean falling = false;
+			@Comment("Whether the Player can Wall Jump when falling at all.")
+			public boolean falling = true;
+			
+			@Name("Maximum Fall Distance")
+			@Comment("How far the player can fall whilst still being able to Wall Jump. Set this value to 0 to allow Wall Jumping from any fall distance.")
+			@RangeDouble(min = 0, max = Double.MAX_VALUE)
+			public double fallDistance = 1.5;
 			
 		}
 		
@@ -348,7 +353,7 @@ public class ModConfig {
 		public class LedgeGrab {
 
 			@Name("Enable Ledge Grab")
-			@Comment("Whether the Player can Ledge Grab by pressing jump again with their face to the top of a wall. This value does nothing if Reskillable is installed as ledge grabbing is unlocked as a trait.")
+			@Comment("Whether the Player can Ledge Grab by pressing jump again with their face to the top of a wall. This value does nothing if Reskillable is installed as ledge grabbing is unlocked as a trait. This value can also be overriden by the 'Climber' potion effect.")
 			public boolean enable = false;
 			
 			@Name("Forwards Force")
@@ -376,10 +381,24 @@ public class ModConfig {
 			@RangeInt(min = 0, max = 5)
 			public int maximum = 3;
 			
+			@Name("Ledge Grab Cooldown")
+			@Comment("How many ticks the player must wait between Ledge Grabs.")
+			@RangeInt(min = 0, max = Integer.MAX_VALUE)
+			public int cooldown = 15;
+			
 			@Name("Distance")
 			@Comment("How much farther from the Wall you can stand to Ledge Grab.")
 			@RangeDouble(min = 0, max = 1.5)
 			public double distance = 0.12;
+			
+			@Name("Falling Ledge Grab")
+			@Comment("Whether the Player can Ledge Grab when falling at all.")
+			public boolean falling = true;
+			
+			@Name("Maximum Fall Distance")
+			@Comment("How far the player can fall whilst still being able to Ledge Grab. Set this value to 0 to allow Ledge Grabbing from any fall distance.")
+			@RangeDouble(min = 0, max = Double.MAX_VALUE)
+			public double fallDistance = 5.0;
 			
 		}
 	}

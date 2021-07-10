@@ -2,8 +2,11 @@ package com.elenai.elenaidodge.event;
 
 import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.api.LedgeGrabEvent.ServerLedgeGrabEvent;
+import com.elenai.elenaidodge.capability.ledgegrabcooldown.ILedgeGrabCooldown;
+import com.elenai.elenaidodge.capability.ledgegrabcooldown.LedgeGrabCooldownProvider;
 import com.elenai.elenaidodge.capability.ledgegrabs.ILedgeGrabs;
 import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsProvider;
+import com.elenai.elenaidodge.init.PotionInit;
 import com.elenai.elenaidodge.util.Utils;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,13 +59,28 @@ public class ServerLedgeGrabEventListener {
 
 		if ((!ModConfig.common.ledgeGrab.enable && !Loader.isModLoaded("reskillable"))
 				|| !Utils.ledgeGrabTraitUnlocked(event.getPlayer())) {
-			event.setCanceled(true);
+			event.setCanceled(!player.isPotionActive(PotionInit.CLIMBER_EFFECT));
 		}
 
-		//TODO: Add a cooldown to ledgegrab
+		ILedgeGrabCooldown lgc = player.getCapability(LedgeGrabCooldownProvider.LEDGEGRABCOOLDOWN_CAP, null);
+		if(lgc.getLedgeGrabs() > 0) {
+			event.setCanceled(true);
+		}
 		
 		// Modifiers
 		if (player.getFoodStats().getFoodLevel() <= ModConfig.common.ledgeGrab.hunger) {
+			event.setCanceled(true);
+		}
+		
+		if(player.isCreative() || player.isSpectator()) {
+			event.setCanceled(true);
+		}
+		
+		if(!ModConfig.common.ledgeGrab.falling && player.chasingPosY > player.posY) {
+			event.setCanceled(true);
+		}
+		
+		if(player.fallDistance > ModConfig.common.ledgeGrab.fallDistance) {
 			event.setCanceled(true);
 		}
 		

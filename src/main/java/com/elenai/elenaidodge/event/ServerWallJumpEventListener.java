@@ -7,6 +7,7 @@ import com.elenai.elenaidodge.api.WallJumpEvent.Direction;
 import com.elenai.elenaidodge.api.WallJumpEvent.ServerWallJumpEvent;
 import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
 import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
+import com.elenai.elenaidodge.init.PotionInit;
 import com.elenai.elenaidodge.util.Utils;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -76,7 +77,7 @@ public class ServerWallJumpEventListener {
 
 		if ((!ModConfig.common.wallJump.enable && !Loader.isModLoaded("reskillable"))
 				|| !Utils.wallJumpTraitUnlocked(event.getPlayer())) {
-			event.setCanceled(true);
+			event.setCanceled(!player.isPotionActive(PotionInit.NIMBLE_EFFECT));
 		}
 
 		// Modifiers
@@ -152,6 +153,14 @@ public class ServerWallJumpEventListener {
 			}
 			
 			if(!ModConfig.common.wallJump.falling && player.chasingPosY > player.posY) {
+				event.setCanceled(true);
+			}
+			
+			if(player.isCreative() || player.isSpectator()) {
+				event.setCanceled(true);
+			}
+			
+			if(player.fallDistance > ModConfig.common.wallJump.fallDistance) {
 				event.setCanceled(true);
 			}
 			
