@@ -39,6 +39,10 @@ public class ModConfig {
 			@Name("Show HUD")
 			@Comment("Whether to show the cooldown UI.")
 			public boolean hud = true;
+			
+			@Name("Legacy HUD")
+			@Comment("Whether to show the old cooldown UI above the experience bar.")
+			public boolean legacyHud = false;
 
 			@Name("Show Tutorial")
 			@Comment("Whether to show the tutorial on joining a new world.")

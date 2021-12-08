@@ -38,10 +38,23 @@ public class DodgeGui {
 						: (event.getResolution().getScaledHeight() / 2 - 7 + 16);
 				int j = event.getResolution().getScaledWidth() / 2 - 8 - 5;
 				if (alpha > 0 && ClientStorage.dodges > 0) {
-					gui.drawTexturedModalRect(j, i, 16, 0, 27, 16);
-					gui.drawTexturedModalRect(j, i, 16 + 27, 0, ClientStorage.dodges, 16);
+					
+					if (ModConfig.client.hud.legacyHud) {
+						
+						// Legacy Hud
+						int scaledHeight = event.getResolution().getScaledHeight() - 32 + 3; //Get the Y dimension to render GUI
+						int scaledWidth = event.getResolution().getScaledWidth() / 2 - 91; // Get the X dimension to render GUI
+						enableAlpha(.75f);
+						gui.drawTexturedModalRect(scaledWidth, scaledHeight, 0, 16, (int) Math.ceil(ClientStorage.dodgesDouble*(182/27)), 5);
+						disableAlpha(.75f);
 
+					} else {
+						// Modern Hud
+						gui.drawTexturedModalRect(j, i, 16, 0, 27, 16);
+						gui.drawTexturedModalRect(j, i, 16 + 27, 0, ClientStorage.dodges, 16);
+					}
 				}
+
 				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
 						GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
 						GlStateManager.DestFactor.ZERO);
