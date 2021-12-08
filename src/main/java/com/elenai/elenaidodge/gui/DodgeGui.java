@@ -38,7 +38,6 @@ public class DodgeGui {
 						: (event.getResolution().getScaledHeight() / 2 - 7 + 16);
 				int j = event.getResolution().getScaledWidth() / 2 - 8 - 5;
 				if (alpha > 0 && ClientStorage.dodges > 0) {
-					
 					if (ModConfig.client.hud.legacyHud) {
 						
 						// Legacy Hud
