@@ -12,6 +12,7 @@ import com.elenai.elenaidodge.capability.ledgegrabcooldown.LedgeGrabCooldownProv
 import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsProvider;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
 import com.elenai.elenaidodge.capability.regen.RegenProvider;
+import com.elenai.elenaidodge.capability.walljumpcooldown.WallJumpCooldownProvider;
 import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
 import com.elenai.elenaidodge.capability.weight.WeightProvider;
 
@@ -34,6 +35,7 @@ public class CapabilityHandler {
 	public static final ResourceLocation WALLJUMPS_CAP = new ResourceLocation(ElenaiDodge.MODID, "walljumps");
 	public static final ResourceLocation LEDGEGRABS_CAP = new ResourceLocation(ElenaiDodge.MODID, "ledgegrabs");
 	public static final ResourceLocation LEDGEGRABCOOLDOWN_CAP = new ResourceLocation(ElenaiDodge.MODID, "ledgegrabcooldown");
+	public static final ResourceLocation WALLJUMPCOOLDOWN_CAP = new ResourceLocation(ElenaiDodge.MODID, "walljumpcooldown");
 
 
 	@SubscribeEvent
@@ -68,6 +70,9 @@ public class CapabilityHandler {
 			}
 			if (!event.getObject().hasCapability(LedgeGrabCooldownProvider.LEDGEGRABCOOLDOWN_CAP, null)) {
 				event.addCapability(LEDGEGRABCOOLDOWN_CAP, new LedgeGrabCooldownProvider());
+			}
+			if (!event.getObject().hasCapability(WallJumpCooldownProvider.WALLJUMPCOOLDOWN_CAP, null)) {
+				event.addCapability(WALLJUMPCOOLDOWN_CAP, new WallJumpCooldownProvider());
 			}
 		}
 	}

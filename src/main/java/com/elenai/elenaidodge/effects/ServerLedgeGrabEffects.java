@@ -13,14 +13,16 @@ import net.minecraft.util.SoundCategory;
 public class ServerLedgeGrabEffects {
 
 	/**
-	 * Runs the Server Wall Jump Effects
+	 * Runs the Server Ledge Grab Effects
 	 * 
 	 * @side Server
 	 */
 	public static void run(EntityPlayerMP player) {
-
+		
 		ILedgeGrabs l = player.getCapability(LedgeGrabsProvider.LEDGEGRABS_CAP, null);
 		l.increase(1);
+		
+		player.fallDistance = 0;
 		
 		ILedgeGrabCooldown lgc = player.getCapability(LedgeGrabCooldownProvider.LEDGEGRABCOOLDOWN_CAP, null);
 		lgc.set(ModConfig.common.ledgeGrab.cooldown);

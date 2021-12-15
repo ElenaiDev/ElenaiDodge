@@ -41,8 +41,8 @@ public class DodgeGui {
 					if (ModConfig.client.hud.legacyHud) {
 						
 						// Legacy Hud
-						int scaledHeight = event.getResolution().getScaledHeight() - 32 + 3; //Get the Y dimension to render GUI
-						int scaledWidth = event.getResolution().getScaledWidth() / 2 - 91; // Get the X dimension to render GUI
+						int scaledHeight = event.getResolution().getScaledHeight() - 32 + 3;
+						int scaledWidth = event.getResolution().getScaledWidth() / 2 - 91;
 						enableAlpha(.75f);
 						gui.drawTexturedModalRect(scaledWidth, scaledHeight, 0, 16, (int) Math.ceil(ClientStorage.dodgesDouble*(182/27)), 5);
 						disableAlpha(.75f);

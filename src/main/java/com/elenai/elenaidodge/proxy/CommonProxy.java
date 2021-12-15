@@ -26,6 +26,9 @@ import com.elenai.elenaidodge.capability.particles.ParticlesStorage;
 import com.elenai.elenaidodge.capability.regen.IRegen;
 import com.elenai.elenaidodge.capability.regen.Regen;
 import com.elenai.elenaidodge.capability.regen.RegenStorage;
+import com.elenai.elenaidodge.capability.walljumpcooldown.IWallJumpCooldown;
+import com.elenai.elenaidodge.capability.walljumpcooldown.WallJumpCooldown;
+import com.elenai.elenaidodge.capability.walljumpcooldown.WallJumpCooldownStorage;
 import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
 import com.elenai.elenaidodge.capability.walljumps.WallJumps;
 import com.elenai.elenaidodge.capability.walljumps.WallJumpsStorage;
@@ -71,6 +74,8 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(IWallJumps.class, new WallJumpsStorage(), WallJumps::new);
 		CapabilityManager.INSTANCE.register(ILedgeGrabs.class, new LedgeGrabsStorage(), LedgeGrabs::new);
 		CapabilityManager.INSTANCE.register(ILedgeGrabCooldown.class, new LedgeGrabCooldownStorage(), LedgeGrabCooldown::new);
+		CapabilityManager.INSTANCE.register(IWallJumpCooldown.class, new WallJumpCooldownStorage(), WallJumpCooldown::new);
+
 
 		MinecraftForge.EVENT_BUS.register(new RenderEventListener());
 		MinecraftForge.EVENT_BUS.register(new EnchantmentInit());

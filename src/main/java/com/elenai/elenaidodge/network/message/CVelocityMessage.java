@@ -18,16 +18,17 @@ public class CVelocityMessage implements IMessage {
 
 	private double motionX, motionY, motionZ;
 
-	private boolean messageValid;
+	private boolean messageValid, addVelocity;
 
 	public CVelocityMessage() {
 		this.messageValid = false;
 	}
 
-	public CVelocityMessage(double motionX, double motionY, double motionZ) {
+	public CVelocityMessage(double motionX, double motionY, double motionZ, boolean addVelocity) {
 		this.motionX = motionX;
 		this.motionY = motionY;
 		this.motionZ = motionZ;
+		this.addVelocity = addVelocity;
 
 		this.messageValid = true;
 	}
@@ -38,6 +39,7 @@ public class CVelocityMessage implements IMessage {
 			this.motionX = buf.readDouble();
 			this.motionY = buf.readDouble();
 			this.motionZ = buf.readDouble();
+			this.addVelocity = buf.readBoolean();
 
 		} catch (IndexOutOfBoundsException ioe) {
 			ElenaiDodge.LOG.error("Error occured whilst networking!", ioe);
@@ -54,6 +56,7 @@ public class CVelocityMessage implements IMessage {
 		buf.writeDouble(motionX);
 		buf.writeDouble(motionY);
 		buf.writeDouble(motionZ);
+		buf.writeBoolean(addVelocity);
 	}
 
 	public static class Handler implements IMessageHandler<CVelocityMessage, IMessage> {
@@ -69,7 +72,12 @@ public class CVelocityMessage implements IMessage {
 		}
 
 		void processMessage(CVelocityMessage message, MessageContext ctx) {
+			if(message.addVelocity) {
+				Minecraft.getMinecraft().player.addVelocity(message.motionX, message.motionY, message.motionZ);
+			} else {
 				Minecraft.getMinecraft().player.setVelocity(message.motionX, message.motionY, message.motionZ);
+
+			}
 		}
 	}
 }

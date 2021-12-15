@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ServerDodgeEventListener {
-
+	
 	@SubscribeEvent
 	public void onServerDodge(ServerDodgeEvent event) {
 

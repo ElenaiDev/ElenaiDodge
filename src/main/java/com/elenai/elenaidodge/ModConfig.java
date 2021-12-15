@@ -76,6 +76,10 @@ public class ModConfig {
 			@Comment("How high the player is pushed from the ground when dodging. This value is proportional distance dodged due to friction.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
 			public double verticality = 0.25;
+			
+			@Name("Use Existing Velocity")
+			@Comment("Whether to use the Player's current Velocity when calculating Dodge distancing.")
+			public boolean useExistingVelocity = false;
 
 			@Name("Exhaustion")
 			@Comment("How much exhaustion is added when dodging. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second.")
@@ -293,6 +297,25 @@ public class ModConfig {
 
 		public class WallJump {
 
+			public Advanced advanced = new Advanced();
+			
+				public class Advanced {
+					
+					@Name("Read Me! (Hover Mouse Here)")
+					@Comment("Casual Players, turn back now! These values are for finetuning the mod and playtesting. You can adjust the Wall Jump distance, angle, force etc. in the previous page. ")
+					public boolean readMe = true;
+					
+					@Name("Detection Angle")
+					@Comment("Wall Jump Block Collision is checked by three points, one directly behind the player, and two behind the player at an angle (left and right). This value determines how far out these angled points are from the center line. Think of this as a clock, where 6 O'Clock is directly behind the player, and setting this to 90 degrees would create a point at 9 O'Clock and 3' O'Clock. The default of 40 is recommended.")
+					@RangeDouble(min = 0.0, max = 90.0)
+					public double angle = 40;
+					
+					@Name("Detection Angle Length")
+					@Comment("Wall Jump Block Collision is checked by three points, one directly behind the player, and two behind the player at an angle (left and right). This value determines how far away from the player these angled points are in relation to the center line's length, where 1 is equivalent to 100% the length of the center line (determined as 'distance' on previous page) and 0.8 is 80% of that distance. The default of 0.8 is recommended.")
+					@RangeDouble(min = 0.0, max = 1)
+					public double angleLength = 0.8;
+			}
+			
 			@Name("Enable Wall Jump")
 			@Comment("Whether the Player can Wall Jump by pressing jump again with their back to a wall. This value does nothing if Reskillable is installed as wall jumping is unlocked as a trait. This value can also be overriden by the 'Nimble' potion effect.")
 			public boolean enable = false;
@@ -300,13 +323,17 @@ public class ModConfig {
 			@Name("Forwards Force")
 			@Comment("The forwards force of the player's wall jump. (How far they are pushed in the direction they are facing). This value is very sensitive.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
-			public double forwardsForce = 0.2;
+			public double forwardsForce = 0.3;
 			
 			@Name("Outwards Force")
 			@Comment("The outwards force of the player's wall jump. (How far they are pushed away from the wall). This value is very sensitive.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
 			public double outwardsForce = 0.3;
-
+			
+			@Name("Use Existing Velocity")
+			@Comment("Whether to use the Player's current Velocity when calculating Wall Jump distancing. If disabled, please note Verticality, Forwards Force and Outwards Force will be more powerful and may need to be lowered.")
+			public boolean useExistingVelocity = true;
+			
 			@Name("Verticality")
 			@Comment("How high the player jumps. This value will affect distance jumped due to airtime.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
@@ -322,33 +349,38 @@ public class ModConfig {
 			@RangeInt(min = -1, max = 20)
 			public int hunger = 6;
 
-			@Name("Forgiving Angle")
-			@Comment("Increase this value to allow the Player to Wall Jump when facing further towards the wall.")
-			@RangeInt(min = 0, max = 100)
-			public int forgiving = 10;
+			@Name("Required Angle")
+			@Comment("How far (as a percentage from 0 to 1) the player must face away from the wall to Wall Jump.")
+			@RangeInt(min = 0, max = 1)
+			public double angle = 0.2;
+			
+			@Name("Wall Jump Cooldown")
+			@Comment("How many ticks the player must wait between Wall Jumps.")
+			@RangeInt(min = 0, max = Integer.MAX_VALUE)
+			public int cooldown = 5;
 			
 			@Name("Maximum Wall Jumps")
 			@Comment("How many Wall Jumps the player can perform before touching the ground again. Set this value to 0 to allow infinite Wall Jumps.")
 			@RangeInt(min = 0, max = 5)
-			public int maximum = 3;
+			public int maximum = 0;
 			
 			@Name("Distance")
 			@Comment("How much farther from the Wall you can stand to Wall Jump.")
-			@RangeDouble(min = 0, max = 1.5)
-			public double distance = 0.12;
-			
-			@Name("One Block Wall Jump")
-			@Comment("Whether the Player can Wall Jump in a one block gap.")
-			public boolean oneBlock = false;
+			@RangeDouble(min = 0, max = 1.6)
+			public double distance = 0.14;
 			
 			@Name("Falling Wall Jump")
-			@Comment("Whether the Player can Wall Jump when falling at all.")
+			@Comment("Whether the Player can Wall Jump when falling.")
 			public boolean falling = true;
 			
 			@Name("Maximum Fall Distance")
 			@Comment("How far the player can fall whilst still being able to Wall Jump. Set this value to 0 to allow Wall Jumping from any fall distance.")
 			@RangeDouble(min = 0, max = Double.MAX_VALUE)
-			public double fallDistance = 1.5;
+			public double fallDistance = 3;
+			
+			@Name("One Block Wall Jump")
+			@Comment("Whether the Player can Wall Jump in a one block gap.")
+			public boolean oneBlock = true;
 			
 		}
 		
@@ -369,6 +401,10 @@ public class ModConfig {
 			@Comment("The upwards force of the player's ledge grab. (How far they are pushed upwards). This value is very sensitive.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
 			public double upwardsForce = 0.48;
+			
+			@Name("Use Existing Velocity")
+			@Comment("Whether to use the Player's current Velocity when calculating Ledge Grab distancing.")
+			public boolean useExistingVelocity = false;
 
 			@Name("Exhaustion")
 			@Comment("How much exhaustion is added when ledge grabbing. For reference, sprinting adds 0.01 exhaustion per meter, and the Hunger effect adds 0.1 per second.")
@@ -390,13 +426,18 @@ public class ModConfig {
 			@RangeInt(min = 0, max = Integer.MAX_VALUE)
 			public int cooldown = 15;
 			
+			@Name("Required Angle")
+			@Comment("How far (as a percentage from 0 to 1) the player must face towards the wall to Ledge Grab.")
+			@RangeInt(min = 0, max = 1)
+			public double angle = 0.8;
+			
 			@Name("Distance")
 			@Comment("How much farther from the Wall you can stand to Ledge Grab.")
-			@RangeDouble(min = 0, max = 1.5)
+			@RangeDouble(min = 0, max = 1.6)
 			public double distance = 0.12;
 			
 			@Name("Falling Ledge Grab")
-			@Comment("Whether the Player can Ledge Grab when falling at all.")
+			@Comment("Whether the Player can Ledge Grab when falling")
 			public boolean falling = true;
 			
 			@Name("Maximum Fall Distance")

@@ -29,6 +29,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.Loader;
 
 public class Utils {
@@ -43,8 +44,8 @@ public class Utils {
 	 * @author Elenai
 	 * @side Server
 	 */
-	public static void setPlayerVelocity(double x, double y, double z, EntityPlayer player) {
-		PacketHandler.instance.sendTo(new CVelocityMessage(x, y, z), (EntityPlayerMP) player);
+	public static void setPlayerVelocity(double x, double y, double z, EntityPlayer player, boolean useExistingVelocity) {
+		PacketHandler.instance.sendTo(new CVelocityMessage(x, y, z, useExistingVelocity), (EntityPlayerMP) player);
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class Utils {
 			motionZ = 0;
 			ElenaiDodge.LOG.error("DodgeEvent Posted and Received but no direction given!");
 		}
-		setPlayerVelocity(motionX, ModConfig.common.balance.verticality, motionZ, player);
+		setPlayerVelocity(motionX, ModConfig.common.balance.verticality, motionZ, player, ModConfig.common.balance.useExistingVelocity);
 		ServerDodgeEffects.run(player);
 		PacketHandler.instance.sendTo(new CDodgeEffectsMessage(), (EntityPlayerMP) player);
 	}
@@ -332,7 +333,7 @@ public class Utils {
 			break;
 		}
 
-		setPlayerVelocity(motionX, ModConfig.common.wallJump.verticality, motionZ, player);
+		setPlayerVelocity(motionX, ModConfig.common.wallJump.verticality, motionZ, player, ModConfig.common.wallJump.useExistingVelocity);
 		ServerWallJumpEffects.run(player);
 	}
 	
@@ -356,7 +357,23 @@ public class Utils {
 		motionZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI)
 				* MathHelper.cos(1 / 180.0F * (float) Math.PI) * f);
 		
-		setPlayerVelocity(motionX, ModConfig.common.ledgeGrab.upwardsForce, motionZ, player);
+		setPlayerVelocity(motionX, ModConfig.common.ledgeGrab.upwardsForce, motionZ, player, ModConfig.common.ledgeGrab.useExistingVelocity);
 		ServerLedgeGrabEffects.run(player);
 	}
+	
+	/**
+	 * Returns the Entity's Horizontal Rotation as a Vector3d
+	 * 
+	 * @param yaw The Entity's Rotation Yaw
+	 * @return Horizontal Rotation as a Vector3d
+	 */
+	public static Vec3d getVectorForHorizontalRotation(float yaw)
+    {
+        float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+        float f2 = -MathHelper.cos(-0 * 0.017453292F);
+        float f3 = MathHelper.sin(-0 * 0.017453292F);
+        return new Vec3d((double)(f1 * f2), (double)f3, (double)(f * f2));
+    }
+	
 }

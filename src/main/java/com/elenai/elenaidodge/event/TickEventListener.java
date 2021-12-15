@@ -8,6 +8,8 @@ import com.elenai.elenaidodge.capability.ledgegrabs.ILedgeGrabs;
 import com.elenai.elenaidodge.capability.ledgegrabs.LedgeGrabsProvider;
 import com.elenai.elenaidodge.capability.particles.IParticles;
 import com.elenai.elenaidodge.capability.particles.ParticlesProvider;
+import com.elenai.elenaidodge.capability.walljumpcooldown.IWallJumpCooldown;
+import com.elenai.elenaidodge.capability.walljumpcooldown.WallJumpCooldownProvider;
 import com.elenai.elenaidodge.capability.walljumps.IWallJumps;
 import com.elenai.elenaidodge.capability.walljumps.WallJumpsProvider;
 import com.elenai.elenaidodge.network.PacketHandler;
@@ -38,6 +40,11 @@ public class TickEventListener {
 			ILedgeGrabCooldown lgc = event.player.getCapability(LedgeGrabCooldownProvider.LEDGEGRABCOOLDOWN_CAP, null);
 			if(lgc.getLedgeGrabs() > 0) {
 				lgc.decrease(1);
+			}
+			
+			IWallJumpCooldown wjc = event.player.getCapability(WallJumpCooldownProvider.WALLJUMPCOOLDOWN_CAP, null);
+			if(wjc.getWallJumps() > 0) {
+				wjc.decrease(1);
 			}
 			
 			ILedgeGrabs l = event.player.getCapability(LedgeGrabsProvider.LEDGEGRABS_CAP, null);
