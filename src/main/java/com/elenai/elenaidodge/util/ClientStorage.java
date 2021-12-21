@@ -10,6 +10,7 @@ public class ClientStorage {
 	public static double tutorialDodges = 2;
 	
 	public static int regenModifier = 0;
+	public static int jumpCooldown = 0;
 	
 	// Config Values
 	public static String weightValues;

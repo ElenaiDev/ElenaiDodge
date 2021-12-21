@@ -43,7 +43,6 @@ import com.elenai.elenaidodge.event.ServerDodgeEventListener;
 import com.elenai.elenaidodge.event.ServerLedgeGrabEventListener;
 import com.elenai.elenaidodge.event.ServerWallJumpEventListener;
 import com.elenai.elenaidodge.event.TickEventListener;
-import com.elenai.elenaidodge.init.EnchantmentInit;
 import com.elenai.elenaidodge.init.ItemInit;
 import com.elenai.elenaidodge.init.PotionInit;
 import com.elenai.elenaidodge.network.PacketHandler;
@@ -76,9 +75,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(ILedgeGrabCooldown.class, new LedgeGrabCooldownStorage(), LedgeGrabCooldown::new);
 		CapabilityManager.INSTANCE.register(IWallJumpCooldown.class, new WallJumpCooldownStorage(), WallJumpCooldown::new);
 
-
 		MinecraftForge.EVENT_BUS.register(new RenderEventListener());
-		MinecraftForge.EVENT_BUS.register(new EnchantmentInit());
 		ItemInit.init();
 		PotionInit.registerPotions();
 
@@ -96,6 +93,8 @@ public class CommonProxy {
 		
 		MinecraftForge.EVENT_BUS.register(new ServerWallJumpEventListener());
 		MinecraftForge.EVENT_BUS.register(new ServerLedgeGrabEventListener());
+		
+
 
 	}
 	

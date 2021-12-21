@@ -21,6 +21,7 @@ public class ClientDodgeEffects {
 		ClientStorage.tutorialDodges+=0.25;
 		DodgeStep.moveToast.setProgress((float)ClientStorage.tutorialDodges);
 		}
+		
 	}
 	
 }

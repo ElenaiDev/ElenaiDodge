@@ -107,7 +107,7 @@ public class ModConfig {
 			@Comment("How many in-game ticks of invincibility the player has after dodging. 20 ticks is 1 second.")
 			@RangeInt(min = 0, max = 100)
 			public int invincibilityTicks = 10;
-
+			
 			@Name("Potion Blacklist")
 			@Comment("Potions that prevent the player from dodging. Insert values in the format modid:potion. Idea Credit: SandwichHorror")
 			public String[] potions = {};
@@ -258,10 +258,6 @@ public class ModConfig {
 			@Name("Enable Weights")
 			@Comment("Enables the Weight System")
 			public boolean enable = true;
-			
-			@Name("Enable Lightweight Enchantment")
-			@Comment("Whether the Light Weight Enchantment can be accessed through an Enchantment Table.")
-			public boolean lightweightEnchantment = true;
 		}
 		
 		public Gamestages gamestages = new Gamestages();

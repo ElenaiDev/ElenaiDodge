@@ -60,7 +60,7 @@ public class ClientTickEventListener {
 					stepVisible = false;
 				}
 				
-				// COOLDOWN
+				// COOLDOWNS
 				if (ClientStorage.cooldown > 0) {
 					ClientStorage.cooldown--;
 				}

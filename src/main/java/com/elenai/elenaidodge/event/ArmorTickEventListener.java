@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.elenai.elenaidodge.init.EnchantmentInit;
 import com.elenai.elenaidodge.integration.ConstructsArmory;
 import com.elenai.elenaidodge.network.PacketHandler;
 import com.elenai.elenaidodge.network.message.SWeightMessage;
 import com.elenai.elenaidodge.util.ClientStorage;
-import com.elenai.elenaidodge.util.Utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -104,7 +102,6 @@ public class ArmorTickEventListener {
 							if(!feet) {weight += ConstructsArmory.getWeight(player, EntityEquipmentSlot.FEET);}
 						}
 					head = false; chest = false; legs = false; feet = false;
-					weight -= Utils.getTotalEnchantmentLevel(EnchantmentInit.LIGHTWEIGHT, player);
 					{
 						ClientStorage.weight = weight;
 						PacketHandler.instance.sendToServer(new SWeightMessage(weight));

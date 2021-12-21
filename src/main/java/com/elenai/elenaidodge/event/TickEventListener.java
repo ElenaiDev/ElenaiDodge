@@ -31,7 +31,7 @@ public class TickEventListener {
 			if (i.getInvincibility() > 0) {
 				i.set(i.getInvincibility() - 1);
 			}
-
+			
 			IWallJumps w = event.player.getCapability(WallJumpsProvider.WALLJUMPS_CAP, null);
 			if (event.player.onGround && w.getWallJumps() > 0) {
 				w.set(0);
