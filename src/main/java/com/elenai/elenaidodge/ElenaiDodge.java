@@ -23,7 +23,7 @@ public class ElenaiDodge
 {
     public static final String MODID = "elenaidodge";
     public static final String NAME = "Elenai Dodge";
-    public static final String VERSION = "2.0";
+    public static final String VERSION = "2.1";
     @Mod.Instance
 	public static ElenaiDodge INSTANCE;
 

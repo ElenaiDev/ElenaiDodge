@@ -1,6 +1,7 @@
 package com.elenai.elenaidodge.enchantment;
 
 import com.elenai.elenaidodge.ElenaiDodge;
+import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.init.EnchantmentInit;
 
 import net.minecraft.enchantment.Enchantment;
@@ -20,6 +21,9 @@ public class EnchantmentLightweight extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
+		if(!ModConfig.common.weights.lightweightEnchantment) {
+			return 1000 * enchantmentLevel;
+		}
 		return 10 * enchantmentLevel;
 	}
 

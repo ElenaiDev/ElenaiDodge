@@ -35,28 +35,30 @@ public class ServerWallJumpEventListener {
 		Vec3d rayPath = inverseRotation.scale(rayLength);
 
 		// RAY START AND END POINTS
-		Vec3d from = player.getPositionVector().addVector(0, 0.2, 0);
+		Vec3d from = player.getPositionVector().addVector(0, 0.6, 0);
 		Vec3d to = from.add(rayPath);
 
 		// LEFT
-		Vec3d playerRotationLeft = Utils.getVectorForHorizontalRotation(event.getPlayer().rotationYawHead + (float) ModConfig.common.wallJump.advanced.angle);
+		Vec3d playerRotationLeft = Utils.getVectorForHorizontalRotation(
+				event.getPlayer().rotationYawHead + (float) ModConfig.common.wallJump.advanced.angle);
 		Vec3d inverseRotationLeft = playerRotationLeft.scale(-1);
-		Vec3d rayPathLeft = inverseRotationLeft.scale(rayLength*ModConfig.common.wallJump.advanced.angleLength);
+		Vec3d rayPathLeft = inverseRotationLeft.scale(rayLength * ModConfig.common.wallJump.advanced.angleLength);
 		Vec3d fromLeft = player.getPositionVector().addVector(0, 0.2, 0);
 		Vec3d toLeft = fromLeft.add(rayPathLeft);
 
 		// RIGHT
-		Vec3d playerRotationRight = Utils.getVectorForHorizontalRotation(event.getPlayer().rotationYawHead - (float) ModConfig.common.wallJump.advanced.angle);
+		Vec3d playerRotationRight = Utils.getVectorForHorizontalRotation(
+				event.getPlayer().rotationYawHead - (float) ModConfig.common.wallJump.advanced.angle);
 		Vec3d inverseRotationRight = playerRotationRight.scale(-1);
-		Vec3d rayPathRight = inverseRotationRight.scale(rayLength*ModConfig.common.wallJump.advanced.angleLength);
+		Vec3d rayPathRight = inverseRotationRight.scale(rayLength * ModConfig.common.wallJump.advanced.angleLength);
 		Vec3d fromRight = player.getPositionVector().addVector(0, 0.2, 0);
 		Vec3d toRight = fromLeft.add(rayPathRight);
-		
+
 		// CREATE AND CAST THE RAYS
 		RayTraceResult ctx = player.world.rayTraceBlocks(from, to);
 		RayTraceResult ctxLeft = player.world.rayTraceBlocks(fromLeft, toLeft);
 		RayTraceResult ctxRight = player.world.rayTraceBlocks(fromRight, toRight);
-		
+
 		// CHECK IF ANY RAY FINDS SOLID BLOCK
 		if (ctx != null && player.world.getBlockState(ctx.getBlockPos()).getMaterial().isSolid()) {
 			event.setDirection(Direction.valueOf(ctx.sideHit.getName().toUpperCase()));
@@ -75,6 +77,17 @@ public class ServerWallJumpEventListener {
 			if (!MinecraftForge.EVENT_BUS.post(lgEvent)) {
 				Utils.handleLedgeGrab(lgEvent, (EntityPlayerMP) player);
 			}
+			event.setCanceled(true);
+		}
+
+		// ENSURE PLAYER IS NOT JUMPING OFF 1 BLOCK
+		Double floorRayLength = new Double(0.9);
+		Vec3d rayPathFloor = new Vec3d(0, -1, 0).scale(floorRayLength);
+		Vec3d fromPlayer = player.getPositionVector();
+		Vec3d toFloor = fromPlayer.add(rayPathFloor);
+		RayTraceResult ctxFloor = player.world.rayTraceBlocks(fromPlayer, toFloor);
+
+		if (ctxFloor != null && player.world.getBlockState(ctxFloor.getBlockPos()).getMaterial().isSolid()) {
 			event.setCanceled(true);
 		}
 

@@ -258,6 +258,10 @@ public class ModConfig {
 			@Name("Enable Weights")
 			@Comment("Enables the Weight System")
 			public boolean enable = true;
+			
+			@Name("Enable Lightweight Enchantment")
+			@Comment("Whether the Light Weight Enchantment can be accessed through an Enchantment Table.")
+			public boolean lightweightEnchantment = true;
 		}
 		
 		public Gamestages gamestages = new Gamestages();
@@ -400,7 +404,7 @@ public class ModConfig {
 			@Name("Upwards Force")
 			@Comment("The upwards force of the player's ledge grab. (How far they are pushed upwards). This value is very sensitive.")
 			@RangeDouble(min = 0.0, max = Double.MAX_VALUE)
-			public double upwardsForce = 0.48;
+			public double upwardsForce = 0.5;
 			
 			@Name("Use Existing Velocity")
 			@Comment("Whether to use the Player's current Velocity when calculating Ledge Grab distancing.")
@@ -411,6 +415,11 @@ public class ModConfig {
 			@RangeDouble(min = 0.0, max = 40.0)
 			public double exhaustion = 0.4;
 
+			@Name("Extra Height")
+			@Comment("How much extra height you have for ledge grabbing. Set to at least 0.2 to allow for Ledge Grabbing up 2 and a Half Blocks. When you increase this, be aware you will also need to increase the Upwards Force variable to complete the ledge grab.")
+			@RangeDouble(min = 0.0, max = 1.0)
+			public double extraHeight = 0.0;
+			
 			@Name("Hunger Requirement")
 			@Comment("How many half drumsticks the player needs to ledge grab. The default six is the same as sprinting.")
 			@RangeInt(min = -1, max = 20)
@@ -429,7 +438,7 @@ public class ModConfig {
 			@Name("Required Angle")
 			@Comment("How far (as a percentage from 0 to 1) the player must face towards the wall to Ledge Grab.")
 			@RangeInt(min = 0, max = 1)
-			public double angle = 0.8;
+			public double angle = 0.7;
 			
 			@Name("Distance")
 			@Comment("How much farther from the Wall you can stand to Ledge Grab.")

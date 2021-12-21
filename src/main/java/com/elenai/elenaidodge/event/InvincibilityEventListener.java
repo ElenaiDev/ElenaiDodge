@@ -1,5 +1,6 @@
 package com.elenai.elenaidodge.event;
 
+import com.elenai.elenaidodge.ModConfig;
 import com.elenai.elenaidodge.capability.invincibility.IInvincibility;
 import com.elenai.elenaidodge.capability.invincibility.InvincibilityProvider;
 
@@ -15,7 +16,7 @@ public class InvincibilityEventListener {
 				|| event.getSource().damageType.contains("player") || event.getSource().damageType.contains("mob"))) {
 			IInvincibility i = event.getEntityLiving()
 					.getCapability(InvincibilityProvider.INVINCIBILITY_CAP, null);
-			if (i.getInvincibility() > 0) {
+			if (i.getInvincibility() > 0 && ModConfig.common.balance.invincibilityTicks > 0) {
 				event.setCanceled(true);
 			}
 		}

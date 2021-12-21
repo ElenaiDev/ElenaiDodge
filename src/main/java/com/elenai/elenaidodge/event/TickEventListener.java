@@ -33,25 +33,25 @@ public class TickEventListener {
 			}
 
 			IWallJumps w = event.player.getCapability(WallJumpsProvider.WALLJUMPS_CAP, null);
-			if(event.player.onGround && w.getWallJumps() > 0) {
+			if (event.player.onGround && w.getWallJumps() > 0) {
 				w.set(0);
 			}
-			
+
 			ILedgeGrabCooldown lgc = event.player.getCapability(LedgeGrabCooldownProvider.LEDGEGRABCOOLDOWN_CAP, null);
-			if(lgc.getLedgeGrabs() > 0) {
+			if (lgc.getLedgeGrabs() > 0) {
 				lgc.decrease(1);
 			}
-			
+
 			IWallJumpCooldown wjc = event.player.getCapability(WallJumpCooldownProvider.WALLJUMPCOOLDOWN_CAP, null);
-			if(wjc.getWallJumps() > 0) {
+			if (wjc.getWallJumps() > 0) {
 				wjc.decrease(1);
 			}
-			
+
 			ILedgeGrabs l = event.player.getCapability(LedgeGrabsProvider.LEDGEGRABS_CAP, null);
-			if(event.player.onGround && l.getLedgeGrabs() > 0) {
+			if (event.player.onGround && l.getLedgeGrabs() > 0) {
 				l.set(0);
 			}
-			
+
 			IParticles p = event.player.getCapability(ParticlesProvider.PARTICLES_CAP, null);
 			if (p.getParticles() > 0) {
 				p.set(p.getParticles() - 1);
